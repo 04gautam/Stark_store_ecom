@@ -3,8 +3,11 @@ const storageService = require('../services/storage.service');
 const cartModel = require("../models/cart.model")
 const saveModel = require("../models/save.model")
 const orderModel = require("../models/order.model")
+const Razorpay = require("razorpay");
 // const user = require("../middlewares/auth.middleware")
-const { v4: uuid } = require("uuid")
+const { v4: uuid } = require("uuid");
+const crypto = require("crypto");
+
 
 
 async function createProduct(req, res) {
@@ -228,12 +231,12 @@ const shipProduct = async (req, res)=>{
     })
     console.log("Order created: ", order)
 
-    // const product = await productModel.findById(productId);
+    const product = await productModel.findById(productId);
 
     
 
 
-//   console.log(product);
+  console.log(product);
 
 
     const nodemailer = require("nodemailer");
@@ -325,6 +328,9 @@ const transporter = nodemailer.createTransport({
 
 
 
+
+
+
     
 
     res.status(200).json({
@@ -336,6 +342,56 @@ const transporter = nodemailer.createTransport({
   
 
 }
+
+
+const Order = async (req, res) => {
+
+
+    // console.log("This route is ready to to make payment...")
+    // console.log(req.body)
+
+    const razorpay = new Razorpay({
+      key_id: process.env.RAZORPAY_KEY_ID,
+      key_secret: process.env.RAZORPAY_KEY_SECRET,
+    });
+
+try {
+    // const { currency = 'INR', receipt } = req.body; // amount in rupees or paise? Razorpay expects paise
+    const options = {
+      amount: Math.round(500 * 100), // convert rupees → paise
+      currency: "INR",
+      receipt: `rcpt_${Date.now()}`,
+      payment_capture: 1 // 1 = auto-capture; set 0 if you want to capture later
+    };
+    const order = await razorpay.orders.create(options);
+    return res.json({ success: true, order });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ success: false, error: err.message });
+  }
+  
+}
+
+const verifyPayment = (req, res) => {
+  const {
+    razorpay_order_id,
+    razorpay_payment_id,
+    razorpay_signature
+  } = req.body;
+
+  const expectedSignature = crypto
+    .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
+    .update(razorpay_order_id + "|" + razorpay_payment_id)
+    .digest("hex");
+
+  if (expectedSignature === razorpay_signature) {
+    return res.json({ success: true, message: "Payment verified" });
+  } else {
+    return res.status(400).json({ success: false, message: "Invalid signature" });
+  }
+};
+
+
 
 const deleteProduct = (req, res)=>{
     const productId = req.params.id;
@@ -354,16 +410,16 @@ const deleteProduct = (req, res)=>{
     } )
 } 
 
-
-
 module.exports = {
     createProduct,
     getFoodItems,
     showCart,
     addInCart,
     saveFood,
+    Order,
     getSaveFood,
     product,
     shipProduct,
-    deleteProduct
+    deleteProduct,
+    verifyPayment
 }

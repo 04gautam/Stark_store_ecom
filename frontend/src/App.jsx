@@ -14,6 +14,7 @@ import Navbar from './components/Navbar'
 import { useEffect, useState } from "react";
 import OrderdProduct from './components/OrderdProduct'
 import Cart from './components/Cart'
+import Payment from './components/Payment'
 
   export const productContext = createContext();
 
@@ -56,6 +57,7 @@ function App() {
         <Route path="/buy/:id" element={<> <Navbar /> <BuyItem /></>} />
         <Route path="/product/:id" element={<SingleProduct />} />
         <Route path="/orderd/product" element={<OrderdProduct />} />
+        <Route path="/payment" element={<Payment />} />
         <Route path="/cart" element={<Cart />} />
       </Routes>
 

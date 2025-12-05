@@ -98,9 +98,16 @@ const ShippingPage = () => {
     }
   
   )
-    .then(() => {
+
+    if (res.status === 200) {
+      // alert("Order placed successfully!");
       return navigate("/order/confirm");
-    })
+    }
+  
+    // Optionally, you can redirect to a confirmation page or clear the cart
+    // setCart([]);
+    // navigate("/order/confirm");
+
     // .catch((error) => {
     //   console.error("Error placing order:", error);
     //   alert("There was an error placing your order. Please try again.");

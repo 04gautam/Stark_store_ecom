@@ -96,11 +96,19 @@ router.post('/save',
     // authMiddleware.authUserMiddleware,
     foodController.saveFood
 )
+router.post('/order',
+    // authMiddleware.authUserMiddleware,
+    foodController.Order
+)
 
 
 router.get('/save',
     // authMiddleware.authUserMiddleware,
     foodController.getSaveFood
+)
+router.post('/verify',
+    // authMiddleware.authUserMiddleware,
+    foodController.verifyPayment
 )
 
 module.exports = router
