@@ -70,6 +70,7 @@ const Register = () => {
             name="name"
             placeholder="Full Name"
             value={formData.name}
+            required
             onChange={handleChange}
             className="
               bg-white/10 
@@ -85,6 +86,7 @@ const Register = () => {
           <input
             type="email"
             name="email"
+            required
             placeholder="Email Address"
             value={formData.email}
             onChange={handleChange}
@@ -105,6 +107,7 @@ const Register = () => {
             placeholder="Password"
             value={formData.password}
             onChange={handleChange}
+            required
             className="
               bg-white/10 
               border border-white/20 

@@ -72,7 +72,7 @@ router.post("/single/:id", authMiddleware.authUserMiddleware, (req, res)=>{
 
 
 
-router.post("/order/:id",
+router.post("/ship/:id",
     authMiddleware.authUserMiddleware,   
      foodController.shipProduct );
 

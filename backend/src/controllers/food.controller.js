@@ -211,14 +211,18 @@ const shipProduct = async (req, res)=>{
     const productId = req.params.id;
     const userId = req.user.id
     const buyerData = req.body;
-    console.log("here is the buyer data: ", buyerData)
-
-    // const buyerData = req.body;
-    // console.log("here is the ship data: ")
-
-
     
-    // const product = await productModel.findById(productId);
+    console.log(productId)
+    console.log(userId)
+    console.log(buyerData)
+
+
+    // console.log("here is the buyer data: ", buyerData)
+
+    // const buyerData = req.body;//
+    // console.log("here is the ship data: ")//
+
+    // const product = await productModel.findById(productId);  //
     const order = await orderModel.create({
         name: buyerData.fullName,
         email: buyerData.email,
@@ -229,17 +233,18 @@ const shipProduct = async (req, res)=>{
         user:userId,
         product:productId,
     })
-    console.log("Order created: ", order)
+
+    // console.log("Order created: ", order)
 
     const product = await productModel.findById(productId);
 
-    
+    // console.log("let see is this working both of them or not: ")
 
 
-  console.log(product);
+//   console.log(product);
 
 
-    const nodemailer = require("nodemailer");
+const nodemailer = require("nodemailer");
 
 // Create a transporter
 
@@ -252,78 +257,78 @@ const transporter = nodemailer.createTransport({
 });
 
 // Email options
-// const mailOptions = {
-//   from: "sunm13398@gmail.com",
-//   to: buyerData.email,
-//   subject: "STARK Technologies",
-//   text: "Hello customer",
+const mailOptions = {
+  from: "sunm13398@gmail.com",
+  to: buyerData.email,
+  subject: "STARK Technologies",
+  text: "Hello customer",
  
-//   html: ` <div style="border: 2px solid #4a4a4a; border-radius: 8px; padding: 20px; font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background-color: #f9f9f9;">
+  html: ` <div style="border: 2px solid #4a4a4a; border-radius: 8px; padding: 20px; font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background-color: #f9f9f9;">
     
-//     <div style="text-align: center; margin-bottom: 20px;">
-//         <h2 style="color: #2c3e50; margin: 0;">STARK ORDER CONFIRMATION</h2>
-//         <div style="height: 3px; background: linear-gradient(to right, #3498db, #2ecc71); margin: 10px 0;"></div>
-//     </div>
+    <div style="text-align: center; margin-bottom: 20px;">
+        <h2 style="color: #2c3e50; margin: 0;">STARK ORDER CONFIRMATION</h2>
+        <div style="height: 3px; background: linear-gradient(to right, #3498db, #2ecc71); margin: 10px 0;"></div>
+    </div>
     
-//     <!-- Customer Details -->
-//     <div style="background-color: white; border-radius: 6px; padding: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-//         <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
-//             <span style="font-weight: bold; color: #7f8c8d;">Customer:</span>
-//             <span style="color: #2c3e50;">${buyerData.fullName}</span>
-//         </div>
+    <!-- Customer Details -->
+    <div style="background-color: white; border-radius: 6px; padding: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+            <span style="font-weight: bold; color: #7f8c8d;">Customer:</span>
+            <span style="color: #2c3e50;">${buyerData.fullName}</span>
+        </div>
 
-//         <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
-//             <span style="font-weight: bold; color: #7f8c8d;">Email:</span>
-//             <span style="color: #2c3e50;">${buyerData.email}</span>
-//         </div>
+        <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+            <span style="font-weight: bold; color: #7f8c8d;">Email:</span>
+            <span style="color: #2c3e50;">${buyerData.email}</span>
+        </div>
 
-//         <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
-//             <span style="font-weight: bold; color: #7f8c8d;">Phone:</span>
-//             <span style="color: #2c3e50;">${buyerData.phone}</span>
-//         </div>
+        <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+            <span style="font-weight: bold; color: #7f8c8d;">Phone:</span>
+            <span style="color: #2c3e50;">${buyerData.phone}</span>
+        </div>
 
-//         <div style="height: 1px; background-color: #ecf0f1; margin: 15px 0;"></div>
+        <div style="height: 1px; background-color: #ecf0f1; margin: 15px 0;"></div>
 
-//         <!-- Product Details -->
-//         <h3 style="color: #34495e; margin-bottom: 10px;">Product Details</h3>
+        <!-- Product Details -->
+        <h3 style="color: #34495e; margin-bottom: 10px;">Product Details</h3>
 
-//         <div style="display: flex; gap: 50px; align-items: center; margin-bottom: 15px;">
-//             <img src="${product.photo}" alt="Product Image" style="width: 120px; height: 120px; object-fit: cover; border-radius: 8px; border: 1px solid #ddd;">
+        <div style="display: flex; gap: 50px; align-items: center; margin-bottom: 15px;">
+            <img src="${product.photo}" alt="Product Image" style="width: 120px; height: 120px; object-fit: cover; border-radius: 8px; border: 1px solid #ddd;">
             
-//             <div style="margin-left: 30px;">
-//                 <p style="margin: 0; font-size: 16px;"><strong>Name:</strong> ${product.name}</p>
-//                 <p style="margin: 4px 0; font-size: 16px;"><strong>Price:</strong> 
-//                     <span style="color: #27ae60; font-weight: bold;">${product.price}</span>
-//                 </p>
-//                 <p style="margin: 4px 0; font-size: 14px; color: #555;"><strong>Description:</strong> ${product.description}</p>
-//                 <p style="margin: 4px 0; font-size: 14px; color: #555;"><strong>Product ID:</strong> ${product._id}</p>
-//             </div>
-//         </div>
-//     </div>
+            <div style="margin-left: 30px;">
+                <p style="margin: 0; font-size: 16px;"><strong>Name:</strong> ${product.name}</p>
+                <p style="margin: 4px 0; font-size: 16px;"><strong>Price:</strong> 
+                    <span style="color: #27ae60; font-weight: bold;">${product.price}</span>
+                </p>
+                <p style="margin: 4px 0; font-size: 14px; color: #555;"><strong>Description:</strong> ${product.description}</p>
+                <p style="margin: 4px 0; font-size: 14px; color: #555;"><strong>Product ID:</strong> ${product._id}</p>
+            </div>
+        </div>
+    </div>
 
-//     <!-- Special Request -->
-//     <div style="background-color: #fff8e1; border-left: 4px solid #ffc107; padding: 12px; margin-top: 20px; border-radius: 0 4px 4px 0;">
-//         <h4 style="color: #ff9800; margin: 0 0 5px;">Special Request:</h4>
-//         <p style="margin: 0; color: #795548;">"If you want to cancel this order e-mail us with product ID"</p>
-//     </div>
+    <!-- Special Request -->
+    <div style="background-color: #fff8e1; border-left: 4px solid #ffc107; padding: 12px; margin-top: 20px; border-radius: 0 4px 4px 0;">
+        <h4 style="color: #ff9800; margin: 0 0 5px;">Special Request:</h4>
+        <p style="margin: 0; color: #795548;">"If you want to cancel this order e-mail us with product ID"</p>
+    </div>
 
-//     <!-- Footer -->
-//     <div style="text-align: center; margin-top: 25px; color: #7f8c8d; font-size: 12px;">
-//         <p>Thank you for your order! We'll process it shortly.</p>
-//         <p>Need help? Contact us at support@stark.com</p>
-//     </div>
+    <!-- Footer -->
+    <div style="text-align: center; margin-top: 25px; color: #7f8c8d; font-size: 12px;">
+        <p>Thank you for your order! We'll process it shortly.</p>
+        <p>Need help? Contact us at support@stark.com</p>
+    </div>
 
-// </div>
+</div>
 
-//   `,
-// };
+  `,
+};
 
-// transporter.sendMail(mailOptions, (error, info) => {
-//   if (error) {
-//     return console.log("Error:", error);
-//   }
-  // //console.log("Email sent:", info.response);
-// });
+transporter.sendMail(mailOptions, (error, info) => {
+  if (error) {
+    return console.log("Error:", error);
+  }
+  //console.log("Email sent:", info.response);
+});
 // Send the email
 
 
@@ -337,9 +342,7 @@ const transporter = nodemailer.createTransport({
         success: true,
         message: "Order placed successfully",
         
-    });
-
-  
+    });  
 
 }
 
@@ -357,8 +360,9 @@ const Order = async (req, res) => {
 
 try {
     // const { currency = 'INR', receipt } = req.body; // amount in rupees or paise? Razorpay expects paise
+    console.log("ok let's see", req.body)
     const options = {
-      amount: Math.round(500 * 100), // convert rupees → paise
+      amount: Math.round(req.body.amount * 100), // convert rupees → paise
       currency: "INR",
       receipt: `rcpt_${Date.now()}`,
       payment_capture: 1 // 1 = auto-capture; set 0 if you want to capture later

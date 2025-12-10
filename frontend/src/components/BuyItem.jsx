@@ -3,6 +3,7 @@ import { useContext, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { productContext } from "../App";
 import axios from "axios";
+import PayButton from "./Payment";
 
 const ShippingPage = () => {
 
@@ -12,19 +13,7 @@ const ShippingPage = () => {
     // const { products } = useContext(productContext);
     const { id } = useParams();
     
-    // const matchedProduct = products.find((prod) => prod._id === id);
-  //  console.log(matchedProduct);
-
-
-// `http://localhost:5000/api/food/single/${id}`,
-//     {}, // body should be empty
-//     {
-//       withCredentials: true,
-//       headers: {
-//         "Content-Type": "application/json",
-//       },
-//     }
-//   )
+ 
 
     useEffect(() => {
       axios.post(`http://localhost:5000/api/food/single/${id}`, 
@@ -67,7 +56,9 @@ const ShippingPage = () => {
   };
 
   const placeOrder = async () => {
-    // console.log((form.address).length);
+
+    console.log("let see")
+  //   // console.log((form.address).length);
     if (
       !form.fullName || !form.email || !form.phone || !form.address || !form.city || !form.pincode
     ) {
@@ -75,18 +66,8 @@ const ShippingPage = () => {
       return;
     }
 
-  //   axios.post(
-  //   `http://localhost:5000/api/food/single/${id}`,
-  //   {}, // body should be empty
-  //   {
-  //     withCredentials: true,
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //   }
-  // )
 
-    const res = await axios.post("http://localhost:5000/api/food/order/" + product._id, {
+    const res = await axios.post("http://localhost:5000/api/food/ship/" + product._id, {
       productId: product._id,
       ...form,  
     },
@@ -104,14 +85,7 @@ const ShippingPage = () => {
       return navigate("/order/confirm");
     }
   
-    // Optionally, you can redirect to a confirmation page or clear the cart
-    // setCart([]);
-    // navigate("/order/confirm");
-
-    // .catch((error) => {
-    //   console.error("Error placing order:", error);
-    //   alert("There was an error placing your order. Please try again.");
-    // });
+    
     
     
   };
@@ -238,7 +212,11 @@ const ShippingPage = () => {
           >
             Place Order
           </button>
+
+   <PayButton onClick={placeOrder} amount={product.price}  formData={form} productId={product._id}/> 
+
         </div>
+   
 
       </div>
     </div>

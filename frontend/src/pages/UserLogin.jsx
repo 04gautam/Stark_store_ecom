@@ -1,18 +1,17 @@
-import { useState } from "react"; 
-import { Link } from "react-router-dom";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
-const Login = () => {
 
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+
+const Login = () => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-  
   });
 
- 
+  const [error, setError] = useState("");
 
   // Handle input change
   const handleChange = (e) => {
@@ -22,50 +21,63 @@ const Login = () => {
     });
   };
 
- 
   const handleSubmit = async (e) => {
     e.preventDefault();
-      
 
-      const res = await axios.post("http://localhost:5000/api/auth/user/login", formData,{
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        withCredentials: true
-      }).then(()=>{
-        navigate("/");
+    try {
+      const res = await axios.post(
+        "http://localhost:5000/api/auth/user/login",
+        formData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      );
 
-      });
-      
-
-
+      navigate("/");
+    } catch (err) {
+      setError("Invalid email or password. Please try again.");
+    }
   };
+
   return (
-    
-    <div className="w-full min-h-screen  flex justify-center items-center bg-linear-to-b from-gray-500 via-black to-gray-900">
+    <div className="w-full min-h-screen flex justify-center items-center bg-linear-to-b from-gray-500 red to-gray-900">
 
       <div className="
-        w-[90%] 
-        max-w-md 
-        bg-linear-to-b from-gray-500 via-black to-gray-900
-        backdrop-blur-xl 
-        border 
-        border-white/20 
-        rounded-2xl 
-        p-8 
-        text-white 
+        w-[90%]
+        max-w-md
+        bg-white/10
+        backdrop-blur-2xl
+        border border-white/20
+        rounded-2xl
+        p-8
+        text-white
         shadow-2xl
+        relative
       ">
-        <h1 className="text-3xl font-bold mb-6 text-center">
-          Welcome Back
+        
+        {/* Brand */}
+        <h1 className="text-4xl font-extrabold mb-2 text-center tracking-wide">
+          STARK<span className="text-red-400">store</span>
         </h1>
 
-        <form className="flex flex-col gap-4">
+        <p className="text-center text-gray-300 mb-6">
+          Welcome back, login to continue
+        </p>
 
+        {/* Error Message */}
+        {error && (
+          <p className="text-red-400 bg-red-900/30 border border-red-700/40 px-3 py-2 rounded-lg text-center mb-4">
+            {error}
+          </p>
+        )}
+
+        <form className="flex flex-col gap-5">
           <input
             type="email"
             name="email"
-           
             placeholder="Email Address"
             value={formData.email}
             onChange={handleChange}
@@ -76,14 +88,14 @@ const Login = () => {
               rounded-xl 
               text-white 
               focus:outline-none 
-              placeholder-gray-200
+              placeholder-gray-300
+              focus:ring-2 focus:ring-green-400
             "
           />
 
           <input
             type="password"
             name="password"
-           
             placeholder="Password"
             value={formData.password}
             onChange={handleChange}
@@ -94,7 +106,8 @@ const Login = () => {
               rounded-xl 
               text-white 
               focus:outline-none 
-              placeholder-gray-200
+              placeholder-gray-300
+              focus:ring-2 focus:ring-green-400
             "
           />
 
@@ -102,29 +115,29 @@ const Login = () => {
             type="submit"
             onClick={handleSubmit}
             className="
-              bg-white 
-              text-black 
+              bg-red-500 
+              text-white 
               font-semibold 
               p-3 
               rounded-xl 
-              hover:bg-gray-200 
+              hover:bg-red-600 
               duration-200
+              shadow-lg shadow-red-500/30
             "
           >
             Login
           </button>
-
         </form>
 
-        <p className="text-center mt-4 text-gray-300">
-          Don't have an account?{" "}
-          <span className="text-white underline cursor-pointer">
-          <Link to="/register">Register</Link>
+        <p className="text-center mt-5 text-gray-300">
+          Don’t have an account?{" "}
+          <span className="text-red-400 underline cursor-pointer">
+            <Link to="/register">Register</Link>
           </span>
         </p>
+
       </div>
     </div>
-
   );
 };
 

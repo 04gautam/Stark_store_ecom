@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function loadRazorpayScript() {
   return new Promise((resolve) => {
@@ -13,20 +14,29 @@ function loadRazorpayScript() {
   });
 }
 
-export default function PayButton({ amount }) {
+export default function PayButton({ amount, formData , productId }) {
+
+    const navigate = useNavigate();  
   const handlePay = async () => {
     const res = await loadRazorpayScript();
     if (!res) return alert('Razorpay SDK failed to load.');
 
     // 1) create order on backend
-    const { data } = await axios.post('http://localhost:5000/api/food/order', { amount });
+    const { data } = await axios.post('http://localhost:5000/api/food/order', { amount:amount },
+      {
+      withCredentials: true,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+    );
     const { order } = data;
     console.log(order)
 
     const options = {
       key: "rzp_test_Rl9K83W6eOTpP4", // publishable key (safe to expose)
       // amount: order.amount,
-      amount: 500,
+      amount: amount,
       // currency: order.currency,
       currency: 'INR',
       name: 'My Shop',
@@ -44,7 +54,30 @@ export default function PayButton({ amount }) {
       );
 
       if (verifyRes.data.success) {
-        alert("Payment verified & successful!");
+        // alert("Payment verified & successful!");
+
+        // from here payment will be done and also verify 
+
+//*** this all is just for test now we can call this apin to save the orders on backend
+//    with needed data like product id and form data  */
+
+         const res = await axios.post("http://localhost:5000/api/food/ship/" + productId, {
+      productId: productId,
+      ...formData,  
+    },
+    {
+      withCredentials: true,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  
+  )
+   
+      // alert("Order placed successfully!");
+      return navigate("/order/confirm");
+    
+
       } else {
         alert("Payment verification failed");
       }
@@ -65,30 +98,17 @@ export default function PayButton({ amount }) {
     rzp.open();
 
     
+    console.log(formData)
   };
 
-function handleCheck(){
-    const res = axios.post('http://localhost:5000/api/food/verify', 
-        {
-          name: "apple",
-          id: "1",
-          color: "red"
 
-        },
-    {
-      withCredentials: true,
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-          );
-    }
+
   return(<>
-  <div className='min-h-screen bg-black/60  flex justify-center items-center'>
+  {/* <div className='min-h-screen bg-black/60  flex justify-center items-center'> */}
 
-  <button className='bg-green-600 p-4 px-10 hover:bg-green-500 rounded m-4 ' onClick={handlePay}>Pay ₹{amount}</button>
-  <button className='bg-red-600 p-4 px-10 hover:bg-red-500 rounded m-4 ' onClick={handleCheck}>Pay Test</button>
-  </div>
+  <button className='bg-green-600 p-4 px-10 hover:bg-green-500 rounded m-4 ' onClick={handlePay}>Pay </button>
+  {/* <button className='bg-red-600 p-4 px-10 hover:bg-red-500 rounded m-4 ' onClick={handleCheck}>Pay Test</button> */}
+  {/* </div> */}
   </>)
   
 }
