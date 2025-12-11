@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
+
 function loadRazorpayScript() {
   return new Promise((resolve) => {
     if (document.getElementById('razorpay-sdk')) return resolve(true);
@@ -14,7 +15,7 @@ function loadRazorpayScript() {
   });
 }
 
-export default function PayButton({ amount, formData , productId }) {
+export default function PayButton({ amount, formData , productId, see }) {
 
     const navigate = useNavigate();  
   const handlePay = async () => {
@@ -99,6 +100,7 @@ export default function PayButton({ amount, formData , productId }) {
 
     
     console.log(formData)
+   
   };
 
 

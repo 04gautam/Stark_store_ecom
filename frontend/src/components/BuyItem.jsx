@@ -204,6 +204,7 @@ const ShippingPage = () => {
         {/* Place Order Button */}
         <div className="flex justify-center">
           <button
+          
             onClick={placeOrder}
             className="
               bg-orange-600 text-white px-8 py-3 rounded-xl font-semibold text-lg
@@ -213,7 +214,7 @@ const ShippingPage = () => {
             Place Order
           </button>
 
-   <PayButton onClick={placeOrder} amount={product.price}  formData={form} productId={product._id}/> 
+     <PayButton onClick={placeOrder} amount={product.price}  formData={form} productId={product._id} /> 
 
         </div>
    

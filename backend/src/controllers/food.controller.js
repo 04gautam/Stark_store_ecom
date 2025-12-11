@@ -287,6 +287,11 @@ const mailOptions = {
             <span style="color: #2c3e50;">${buyerData.phone}</span>
         </div>
 
+        <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+            <span style="font-weight: bold; color: #7f8c8d;">Address:</span>
+            <span style="color: #2c3e50;">${buyerData.address} pin: ${buyerData.pincode}</span>
+        </div>
+
         <div style="height: 1px; background-color: #ecf0f1; margin: 15px 0;"></div>
 
         <!-- Product Details -->
@@ -331,12 +336,7 @@ transporter.sendMail(mailOptions, (error, info) => {
 });
 // Send the email
 
-
-
-
-
-
-    
+   
 
     res.status(200).json({
         success: true,
@@ -360,7 +360,8 @@ const Order = async (req, res) => {
 
 try {
     // const { currency = 'INR', receipt } = req.body; // amount in rupees or paise? Razorpay expects paise
-    console.log("ok let's see", req.body)
+    // console.log("ok let's see", req.body)
+
     const options = {
       amount: Math.round(req.body.amount * 100), // convert rupees → paise
       currency: "INR",

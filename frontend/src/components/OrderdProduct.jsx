@@ -30,7 +30,7 @@ function OrderdProduct() {
   <Navbar />
   <div className="min-h-screen bg-gray-100 p-6 mt-20">
   <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">
-     Orders
+    Your Orders
   </h1>
 
   <div className="max-w-4xl mx-auto space-y-6">
@@ -46,7 +46,7 @@ function OrderdProduct() {
   </div>
   </>
 ) }
-    {orders.map((order) => (
+    {orders.reverse().map((order) => (
 
         <div key={order._id} className="bg-white p-6 rounded-2xl shadow-md border">
         <div className="flex justify-between items-center mb-4">
