@@ -108,7 +108,19 @@ export default function PayButton({ amount, formData , productId, see }) {
   return(<>
   {/* <div className='min-h-screen bg-black/60  flex justify-center items-center'> */}
 
-  <button className='bg-green-600 p-4 px-10 hover:bg-green-500 rounded m-4 ' onClick={handlePay}>Pay </button>
+
+<button
+  onClick={handlePay}
+  className="
+    bg-green-600 text-white px-8 py-3 rounded-xl font-semibold text-lg
+    transition-all duration-200 hover:bg-green-500
+  "
+>
+  Pay with Razorpay
+</button>
+
+
+  {/* <button className='bg-green-600 p-4 px-10 hover:bg-green-500 rounded m-4 ' onClick={handlePay}>Pay </button> */}
   {/* <button className='bg-red-600 p-4 px-10 hover:bg-red-500 rounded m-4 ' onClick={handleCheck}>Pay Test</button> */}
   {/* </div> */}
   </>)

@@ -1,4 +1,3 @@
-
 import './App.css'
 import Register from './pages/UserRegister'
 import { createContext } from 'react'
@@ -39,12 +38,10 @@ function App() {
   },[]);
 
 
-
-
   return (
     <>
 
-    <productContext.Provider value={{products}}>
+    <productContext.Provider value={{products:products, setProducts}}>
 
   <BrowserRouter>
   

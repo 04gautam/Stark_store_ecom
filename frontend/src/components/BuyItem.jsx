@@ -10,6 +10,21 @@ const ShippingPage = () => {
   const navigate = useNavigate();  
 
     const [product, setProduct] = useState({});
+    const [fill, setFill] = useState("");
+
+const alertMsg = () =>{
+
+  setFill("Please fill in all required fields")
+
+  setTimeout(()=>{
+      setFill("")
+  },6000)
+
+
+}
+
+  // console.log(fill);
+
     // const { products } = useContext(productContext);
     const { id } = useParams();
     
@@ -48,7 +63,10 @@ const ShippingPage = () => {
     pincode: "",
   });
 
+  
+
   const handleChange = (e) => {
+   
     setForm({
       ...form,
       [e.target.name]: e.target.value,
@@ -57,7 +75,7 @@ const ShippingPage = () => {
 
   const placeOrder = async () => {
 
-    console.log("let see")
+    // console.log("let see")
   //   // console.log((form.address).length);
     if (
       !form.fullName || !form.email || !form.phone || !form.address || !form.city || !form.pincode
@@ -202,22 +220,67 @@ const ShippingPage = () => {
         </div>
 
         {/* Place Order Button */}
-        <div className="flex justify-center">
-          <button
-          
-            onClick={placeOrder}
-            className="
-              bg-orange-600 text-white px-8 py-3 rounded-xl font-semibold text-lg
-              transition-all duration-200 hover:bg-orange-400
-            "
-          >
-            Place Order
-          </button>
+        <div className="flex flex-col items-center gap-4 mt-6">
 
-     <PayButton onClick={placeOrder} amount={product.price}  formData={form} productId={product._id} /> 
+  <h2 className="text-lg font-semibold text-gray-700">
+    Choose Payment Method
+  </h2>
 
-        </div>
-   
+  <div className="flex flex-col md:flex-row gap-4">
+
+    {/* Cash on Delivery */}
+    <button
+      onClick={placeOrder}
+      className="
+        bg-orange-600 text-white px-8 py-3 rounded-xl font-semibold text-lg
+        transition-all duration-200 hover:bg-orange-500
+      "
+    >
+      Cash on Delivery
+    </button>
+
+    {/* Online Payment */}
+    {form.fullName &&
+     form.email &&
+     form.phone &&
+     form.address &&
+     form.city &&
+     form.pincode && (
+      <PayButton 
+        amount={product.price}
+        formData={form}
+        productId={product._id}
+      />
+      
+    )}
+
+    {!form.fullName &&
+     !form.email &&
+     !form.phone &&
+     !form.address &&
+     !form.city &&
+     !form.pincode && (
+      <button
+  onClick={alertMsg}
+  className="
+    bg-green-400 text-white px-8 py-3 rounded-xl font-semibold text-lg
+    transition-all duration-200 hover:bg-green-500
+  "
+>
+  Pay with Razorpay
+</button>
+
+    )}
+{ fill && 
+<div className="text-red-600 mt-2">
+  {fill}
+  </div>
+}</div>
+
+</div>
+
+
+        
 
       </div>
     </div>
