@@ -214,7 +214,7 @@ const GlassNavbar = ({ cartCount = 0 }) => {
       </h1>
 
       {/* Search (Desktop) */}
-      <div className="hidden md:flex items-center lg:border-2 lg:border-gray-500 bg-white/20 backdrop-blur-xl px-4 py-2 rounded-xl border border-white/10">
+      {/* <div className="hidden md:flex items-center lg:border-2 lg:border-gray-500 bg-white/20 backdrop-blur-xl px-4 py-2 rounded-xl border border-white/10">
         <FiSearch size={20} />
         <input
           type="text"
@@ -223,7 +223,7 @@ const GlassNavbar = ({ cartCount = 0 }) => {
           onChange={filter}
           className="bg-transparent ml-2 focus:outline-none placeholder-gray-500 text-black w-64"
         />
-      </div>
+      </div> */}
 
       {/* Menu + Cart (Desktop) */}
       <div className="hidden md:flex items-center gap-10">
@@ -283,7 +283,7 @@ const GlassNavbar = ({ cartCount = 0 }) => {
         ">
 
           {/* Mobile Search */}
-          <div className="flex items-center bg-white/20 px-4 py-2 rounded-xl w-11/12 border border-white/30">
+          {/* <div className="flex items-center bg-white/20 px-4 py-2 rounded-xl w-11/12 border border-white/30">
             <FiSearch size={20} />
             <input
               type="text"
@@ -292,7 +292,7 @@ const GlassNavbar = ({ cartCount = 0 }) => {
               onChange={filter}
               className="bg-transparent ml-2 focus:outline-none placeholder-white text-white w-full"
             />
-          </div>
+          </div> */}
 
           <ul className="flex flex-col items-center gap-4 text-lg font-medium">
             <li><NavLink to="/" className={({ isActive }) => (isActive ? "text-orange-600" : "")}>Home</NavLink></li>

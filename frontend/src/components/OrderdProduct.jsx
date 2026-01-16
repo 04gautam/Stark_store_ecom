@@ -85,19 +85,7 @@ function OrderdProduct() {
         <p>Payment: <span className="font-medium">Paid</span></p>
       </div>
     </div>
-
-       
-      
-
-
-
-
-
-
-     
-    
-   
-     
+  
     ))}
 
   </div>

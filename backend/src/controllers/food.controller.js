@@ -210,12 +210,12 @@ const product = async(req, res) => {
 const shipProduct = async (req, res)=>{
     const productId = req.params.id;
     const userId = req.user.id
+    const ispaid = req.body.ispaid
     const buyerData = req.body;
     
-    console.log(productId)
-    console.log(userId)
-    console.log(buyerData)
-
+    // console.log(productId)
+    // console.log(userId)
+    // console.log(buyerData)
 
     // console.log("here is the buyer data: ", buyerData)
 
@@ -232,6 +232,7 @@ const shipProduct = async (req, res)=>{
         pincode: buyerData.pincode,       
         user:userId,
         product:productId,
+        ispaid:ispaid
     })
 
     // console.log("Order created: ", order)
@@ -359,7 +360,8 @@ const Order = async (req, res) => {
     });
 
 try {
-    // const { currency = 'INR', receipt } = req.body; // amount in rupees or paise? Razorpay expects paise
+    // const { currency = 'INR', receipt } = req.body;
+     // amount in rupees or paise? Razorpay expects paise
     // console.log("ok let's see", req.body)
 
     const options = {

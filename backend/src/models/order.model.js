@@ -8,6 +8,7 @@ const orderSchema = new mongoose.Schema({
   address: String,
   city: String,
   pincode: String,
+  ispaid: Boolean,
 
   user: {
     type: mongoose.Schema.Types.ObjectId,

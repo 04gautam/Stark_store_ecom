@@ -248,6 +248,7 @@ const alertMsg = () =>{
      form.pincode && (
       <PayButton 
         amount={product.price}
+        ispaid={true}
         formData={form}
         productId={product._id}
       />

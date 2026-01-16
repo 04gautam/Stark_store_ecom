@@ -1,19 +1,7 @@
 const mongoose = require('mongoose');
 
-const foodPartnerSchema = new mongoose.Schema({
+const adminSchema = new mongoose.Schema({
     name: {
-        type: String,
-        required: true
-    },
-    contactName: {
-        type: String,
-        required: true
-    },
-    phone: {
-        type: String,
-        required: true
-    },
-    address: {
         type: String,
         required: true
     },
@@ -25,9 +13,13 @@ const foodPartnerSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true
+    },
+    role: {
+        type: String,
+        required: true
     }
 })
 
-const foodPartnerModel = mongoose.model("foodpartner", foodPartnerSchema);
+const adminModel = mongoose.model("admin", adminSchema);
 
-module.exports = foodPartnerModel;
+module.exports = adminModel;

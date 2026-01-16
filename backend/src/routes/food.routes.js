@@ -11,6 +11,7 @@ const upload = multer()
 
 
 router.post("/upload",   
+    // authMiddleware.authAdminMiddleware,
     upload.single("image"),
     foodController.createProduct);
 

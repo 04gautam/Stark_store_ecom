@@ -30,7 +30,7 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-      console.log("Form Data:", formData);
+      // console.log("Form Data:", formData);
 
       try{
 

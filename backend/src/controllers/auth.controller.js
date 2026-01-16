@@ -1,5 +1,5 @@
 const userModel = require("../models/user.model")
-const foodPartnerModel = require("../models/foodpartner.model")
+const adminModel = require("../models/foodpartner.model")
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
@@ -89,11 +89,18 @@ function logoutUser(req, res) {
 }
 
 
-async function registerFoodPartner(req, res) {
+async function registerAdmin(req, res) {
 
-    const { name, email, password, phone, address, contactName } = req.body;
+    const { name, email, password, role} = req.body;
 
-    const isAccountAlreadyExists = await foodPartnerModel.findOne({
+
+    // console.log(name, email, password, role)
+
+    // res.json({
+    //     message: "done"
+    // })
+
+    const isAccountAlreadyExists = await adminModel.findOne({
         email
     })
 
@@ -105,40 +112,38 @@ async function registerFoodPartner(req, res) {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const foodPartner = await foodPartnerModel.create({
+    const admin = await adminModel.create({
         name,
         email,
         password: hashedPassword,
-        phone,
-        address,
-        contactName
+        role
+
     })
 
     const token = jwt.sign({
-        id: foodPartner._id,
+        id: admin._id,
     }, process.env.JWT_SECRET)
 
-    res.cookie("token", token)
+    res.cookie("adminToken", token)
 
     res.status(201).json({
         message: "Food partner registered successfully",
         foodPartner: {
-            _id: foodPartner._id,
-            email: foodPartner.email,
-            name: foodPartner.name,
-            address: foodPartner.address,
-            contactName: foodPartner.contactName,
-            phone: foodPartner.phone
+            _id: admin._id,
+            email: admin.email,
+            name: admin.name,
+            role: admin.role
+            
         }
     })
 
 }
 
-async function loginFoodPartner(req, res) {
+async function loginAdmin(req, res) {
 
     const { email, password } = req.body;
 
-    const foodPartner = await foodPartnerModel.findOne({
+    const foodPartner = await adminModel.findOne({
         email
     })
 
@@ -160,7 +165,7 @@ async function loginFoodPartner(req, res) {
         id: foodPartner._id,
     }, process.env.JWT_SECRET)
 
-    res.cookie("token", token)
+    res.cookie("adminToken", token)
 
     res.status(200).json({
         message: "Food partner logged in successfully",
@@ -183,7 +188,7 @@ module.exports = {
     registerUser,
     loginUser,
     logoutUser,
-    registerFoodPartner,
-    loginFoodPartner,
+    registerAdmin,
+    loginAdmin,
     logoutFoodPartner
 }

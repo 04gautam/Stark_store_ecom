@@ -1,36 +1,35 @@
-const foodPartnerModel = require("../models/foodpartner.model")
+const adminModel = require("../models/foodpartner.model")
 const userModel = require("../models/user.model")
 const jwt = require("jsonwebtoken");
 
-
-async function authFoodPartnerMiddleware(req, res, next) {
+async function authAdminMiddleware(req, res, next) {
 
     const token = req.cookies.token;
-    console.log(token)
-    next()
+    // console.log(token)
+    // next()
 
-    // if (!token) {
-    //     return res.status(401).json({
-    //         message: "Please login first"
-    //     })
-    // }
+    if (!token) {
+        return res.status(401).json({
+            message: "Please login first"
+        })
+    }
 
-    // try {
-    //     const decoded = jwt.verify(token, process.env.JWT_SECRET)
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET)
 
-    //     const foodPartner = await foodPartnerModel.findById(decoded.id);
+        const adminData = await adminModel.findById(decoded.id);
 
-    //     req.foodPartner = foodPartner
+        req.admin = adminData;
 
-    //     next()
+        next()
 
-    // } catch (err) {
+    } catch (err) {
 
-    //     return res.status(401).json({
-    //         message: "Invalid token"
-    //     })
+        return res.status(401).json({
+            message: "Invalid token"
+        })
 
-    // }
+    }
 
 }
 
@@ -41,7 +40,7 @@ async function authUserMiddleware(req, res, next) {
     // console.log(token)
     
      if (!token) {
-        console.log("No token found");
+        // console.log("No token found");
         return res.status(401).json({
             message: "Please login first"
         })
@@ -65,26 +64,9 @@ async function authUserMiddleware(req, res, next) {
     }
 
 
-
-
-    
-    // console.log("METHOD", req.method);
-    // console.log("TOKEN", token);
-   
-
-    // try {
-    //     const decoded = jwt.verify(token, process.env.JWT_SECRET)
-    //     // console.log(decoded)
-    //     const user = await userModel.findById(decoded.id);
-
-    //     req.user = user
-        
-
-    //     next()
 }
-    
 
 module.exports = {
-    // authFoodPartnerMiddleware,
+    authAdminMiddleware,
     authUserMiddleware
 }

@@ -15,7 +15,7 @@ function loadRazorpayScript() {
   });
 }
 
-export default function PayButton({ amount, formData , productId, see }) {
+export default function PayButton({ amount, formData , productId, ispaid}) {
 
     const navigate = useNavigate();  
   const handlePay = async () => {
@@ -32,7 +32,7 @@ export default function PayButton({ amount, formData , productId, see }) {
     }
     );
     const { order } = data;
-    console.log(order)
+    // console.log(order)
 
     const options = {
       key: "rzp_test_Rl9K83W6eOTpP4", // publishable key (safe to expose)
@@ -64,6 +64,7 @@ export default function PayButton({ amount, formData , productId, see }) {
 
          const res = await axios.post("http://localhost:5000/api/food/ship/" + productId, {
       productId: productId,
+      ispaid: ispaid,
       ...formData,  
     },
     {
@@ -83,7 +84,7 @@ export default function PayButton({ amount, formData , productId, see }) {
         alert("Payment verification failed");
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       alert("Error verifying payment");
     }
   },
@@ -99,7 +100,7 @@ export default function PayButton({ amount, formData , productId, see }) {
     rzp.open();
 
     
-    console.log(formData)
+    // console.log(formData)
    
   };
 

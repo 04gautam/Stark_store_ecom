@@ -5,7 +5,7 @@ app.use(cookieParser());
 
 const authRoutes = require('./routes/auth.routes');
 const foodRoutes = require('./routes/food.routes');
-const foodPartnerRoutes = require('./routes/food-partner.routes');
+const adminsRoutes = require('./routes/admins.routes');
 const jwt = require("jsonwebtoken")
 const cors = require('cors');
 require("dotenv").config()
@@ -24,6 +24,6 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use('/api/auth', authRoutes);
 app.use('/api/food', foodRoutes);
-// app.use('/api/food-partner', foodPartnerRoutes);
+// app.use('/api/auth/admin', adminsRoutes);
 
 module.exports = app;

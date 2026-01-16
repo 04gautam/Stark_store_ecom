@@ -14,7 +14,8 @@ import { useEffect, useState } from "react";
 import OrderdProduct from './components/OrderdProduct'
 import Cart from './components/Cart'
 import Payment from './components/Payment'
-
+import AdminRegister from './components/admin_components/AdminRegister'
+import AdminLogin from '../src/components/admin_components/AdminLogin'
   export const productContext = createContext();
 
 function App() {
@@ -56,6 +57,8 @@ function App() {
         <Route path="/orderd/product" element={<OrderdProduct />} />
         <Route path="/payment" element={<Payment />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="/admin/register" element={<AdminRegister />} />
+        <Route path="/admin/login" element={<AdminLogin />} />
       </Routes>
 
   </BrowserRouter>
