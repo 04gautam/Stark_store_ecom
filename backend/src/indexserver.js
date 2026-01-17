@@ -25,5 +25,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/api/auth', authRoutes);
 app.use('/api/food', foodRoutes);
 // app.use('/api/auth/admin', adminsRoutes);
+app.get("/", (req, res)=>{
+  res.send("backend is working...")
+})
 
 module.exports = app;
