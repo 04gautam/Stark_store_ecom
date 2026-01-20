@@ -1,14 +1,26 @@
-const express = require('express');
-const cookieParser = require('cookie-parser');
+// const express = require('express');
+// const cookieParser = require('cookie-parser');
+
+import express from 'express';
+import cookieParser from 'cookie-parser';
 const app = express();
 app.use(cookieParser());
 
-const authRoutes = require('./routes/auth.routes');
-const foodRoutes = require('./routes/food.routes');
-const adminsRoutes = require('./routes/admins.routes');
-const jwt = require("jsonwebtoken")
-const cors = require('cors');
-require("dotenv").config()
+// const authRoutes = require('./routes/auth.routes');
+// const foodRoutes = require('./routes/food.routes');
+// const adminsRoutes = require('./routes/admins.routes');
+// const jwt = require("jsonwebtoken")
+// const cors = require('cors');
+
+import authRoutes from './routes/auth.routes.js';
+import foodRoutes from './routes/food.routes.js';
+// import adminsRoutes from './routes/admins.routes.js';
+import jwt from "jsonwebtoken"
+import cors from 'cors';
+
+// require("dotenv").config()
+
+import 'dotenv/config';
 
 
 app.use(cors({
@@ -24,9 +36,10 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use('/api/auth', authRoutes);
 app.use('/api/food', foodRoutes);
-// app.use('/api/auth/admin', adminsRoutes);
-app.get("/", (req, res)=>{
-  res.send("backend is working...")
-})
 
-module.exports = app;
+
+// app.use('/api/auth/admin', adminsRoutes);
+
+
+// module.exports = app;
+export default app;

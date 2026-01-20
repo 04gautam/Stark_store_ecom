@@ -1,6 +1,10 @@
-const adminModel = require("../models/foodpartner.model")
-const userModel = require("../models/user.model")
-const jwt = require("jsonwebtoken");
+// const adminModel = require("../models/foodpartner.model")
+// const userModel = require("../models/user.model")
+// const jwt = require("jsonwebtoken");
+
+import adminModel from "../models/foodpartner.model.js";
+import userModel from "../models/user.model.js";
+import jwt from "jsonwebtoken";
 
 async function authAdminMiddleware(req, res, next) {
 
@@ -66,7 +70,15 @@ async function authUserMiddleware(req, res, next) {
 
 }
 
-module.exports = {
+// module.exports = {
+//     authAdminMiddleware,
+//     authUserMiddleware
+// }
+
+
+const allMiddlewares = {
     authAdminMiddleware,
     authUserMiddleware
 }
+
+export default allMiddlewares;

@@ -1,7 +1,13 @@
-const userModel = require("../models/user.model")
-const adminModel = require("../models/foodpartner.model")
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
+// const userModel = require("../models/user.model")
+// const adminModel = require("../models/foodpartner.model")
+// const bcrypt = require('bcryptjs');
+// const jwt = require('jsonwebtoken');
+
+
+import userModel from "../models/user.model.js";
+import adminModel from "../models/foodpartner.model.js";
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 
 async function registerUser(req, res) {
 
@@ -184,7 +190,16 @@ function logoutFoodPartner(req, res) {
     });
 }
 
-module.exports = {
+// module.exports = {
+//     registerUser,
+//     loginUser,
+//     logoutUser,
+//     registerAdmin,
+//     loginAdmin,
+//     logoutFoodPartner
+// }
+
+const loginUserController = {
     registerUser,
     loginUser,
     logoutUser,
@@ -192,3 +207,4 @@ module.exports = {
     loginAdmin,
     logoutFoodPartner
 }
+export default loginUserController;

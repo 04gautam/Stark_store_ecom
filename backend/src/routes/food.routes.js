@@ -1,10 +1,19 @@
-const express = require('express');
-const foodController = require("../controllers/food.controller")
-const authMiddleware = require("../middlewares/auth.middleware")
+// const express = require('express');
+// const foodController = require("../controllers/food.controller")
+// const authMiddleware = require("../middlewares/auth.middleware")
+// const router = express.Router();
+// const productModel = require('../models/product.model');
+// const orderModel = require("../models/order.model")
+// const multer = require('multer');
+
+import express from 'express';
+import foodController from "../controllers/food.controller.js"
+import  allMiddlewares from "../middlewares/auth.middleware.js"
+import productModel from '../models/product.model.js';
 const router = express.Router();
-const productModel = require('../models/product.model');
-const orderModel = require("../models/order.model")
-const multer = require('multer');
+import orderModel from "../models/order.model.js"
+import multer from 'multer';
+
 const upload = multer()
 
 // const nodemailer = require("nodemailer");
@@ -25,7 +34,7 @@ router.post("/upload",
 
 /* GET /api/food/ [protected] */
 
-router.get("/orderd/product", authMiddleware.authUserMiddleware, async(req, res)=>{
+router.get("/orderd/product", allMiddlewares.authUserMiddleware, async(req, res)=>{
     // console.log(req.user)
 
     
@@ -50,7 +59,7 @@ router.get("/products",
     foodController.product);
     
 
-router.post("/single/:id", authMiddleware.authUserMiddleware, (req, res)=>{
+router.post("/single/:id", allMiddlewares.authUserMiddleware, (req, res)=>{
     const productId = req.params.id;
 
     productModel.findById(productId)    
@@ -74,7 +83,7 @@ router.post("/single/:id", authMiddleware.authUserMiddleware, (req, res)=>{
 
 
 router.post("/ship/:id",
-    authMiddleware.authUserMiddleware,   
+    allMiddlewares.authUserMiddleware,   
      foodController.shipProduct );
 
 router.delete("/delete/:id",
@@ -85,11 +94,11 @@ router.delete("/delete/:id",
 
 
 router.post('/cart',
-    authMiddleware.authUserMiddleware,
+    allMiddlewares.authUserMiddleware,
     foodController.addInCart)
 
 router.get('/show',
-    authMiddleware.authUserMiddleware,
+    allMiddlewares.authUserMiddleware,
     foodController.showCart)
 
 
@@ -112,4 +121,5 @@ router.post('/verify',
     foodController.verifyPayment
 )
 
-module.exports = router
+// module.exports = router
+export default router;

@@ -1,4 +1,5 @@
-const mongoose = require('mongoose');
+// const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 
 const saveSchema = new mongoose.Schema({
@@ -19,4 +20,5 @@ const saveSchema = new mongoose.Schema({
 
 const saveModel = mongoose.model('save', saveSchema);
 
-module.exports = saveModel;
+// module.exports = saveModel;
+export default saveModel;   

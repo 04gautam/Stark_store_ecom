@@ -1,5 +1,8 @@
-const foodPartnerModel = require('../models/foodpartner.model');
-const foodModel = require('../models/product.model');
+// const foodPartnerModel = require('../models/foodpartner.model');
+// const foodModel = require('../models/product.model');
+
+import foodPartnerModel from '../models/foodpartner.model.js';
+import foodModel from '../models/product.model.js';
 
 async function getFoodPartnerById(req, res) {
 
@@ -22,6 +25,8 @@ async function getFoodPartnerById(req, res) {
     });
 }
 
-module.exports = {
-    getFoodPartnerById
-};
+// module.exports = {
+//     getFoodPartnerById
+// };
+
+export { getFoodPartnerById };

@@ -1,14 +1,23 @@
-const productModel = require('../models/product.model');
-const storageService = require('../services/storage.service');
-const cartModel = require("../models/cart.model")
-const saveModel = require("../models/save.model")
-const orderModel = require("../models/order.model")
-const Razorpay = require("razorpay");
-// const user = require("../middlewares/auth.middleware")
-const { v4: uuid } = require("uuid");
-const crypto = require("crypto");
+// const productModel = require('../models/product.model');
+// const storageService = require('../services/storage.service');
+// const cartModel = require("../models/cart.model")
+// const saveModel = require("../models/save.model")
+// const orderModel = require("../models/order.model")
+// const Razorpay = require("razorpay");
+// // const user = require("../middlewares/auth.middleware")
+// const { v4: uuid } = require("uuid");
+// const crypto = require("crypto");
 
 
+import productModel from '../models/product.model.js';
+import storageService from '../services/storage.service.js';
+import cartModel from "../models/cart.model.js";
+import saveModel from "../models/save.model.js";
+import orderModel from "../models/order.model.js";
+import Razorpay from "razorpay";
+import { v4 as uuid } from "uuid";
+import crypto from "crypto";
+import nodemailer from "nodemailer";
 
 async function createProduct(req, res) {
 
@@ -39,6 +48,9 @@ async function createProduct(req, res) {
         
     })
 }
+
+
+
 
 
 async function getFoodItems(req, res) {
@@ -245,7 +257,8 @@ const shipProduct = async (req, res)=>{
 //   console.log(product);
 
 
-const nodemailer = require("nodemailer");
+// const nodemailer = require("nodemailer");
+
 
 // Create a transporter
 
@@ -417,7 +430,21 @@ const deleteProduct = (req, res)=>{
     } )
 } 
 
-module.exports = {
+// module.exports = {
+//     createProduct,
+//     getFoodItems,
+//     showCart,
+//     addInCart,
+//     saveFood,
+//     Order,
+//     getSaveFood,
+//     product,
+//     shipProduct,
+//     deleteProduct,
+//     verifyPayment
+// }
+
+const foodController = {
     createProduct,
     getFoodItems,
     showCart,
@@ -429,4 +456,6 @@ module.exports = {
     shipProduct,
     deleteProduct,
     verifyPayment
-}
+};
+
+export default foodController;
