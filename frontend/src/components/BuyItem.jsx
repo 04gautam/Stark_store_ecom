@@ -31,7 +31,8 @@ const alertMsg = () =>{
  
 
     useEffect(() => {
-      axios.post(`http://localhost:5000/api/food/single/${id}`, 
+      // axios.post(`http://localhost:5000/api/food/single/${id}`, 
+      axios.post(`https://stark-store-ecom-r7idbindt-04gautams-projects.vercel.app/api/food/single/${id}`, 
         {}, // body should be empty
     {
       withCredentials: true,
@@ -85,7 +86,7 @@ const alertMsg = () =>{
     }
 
 
-    const res = await axios.post("http://localhost:5000/api/food/ship/" + product._id, {
+    const res = await axios.post("https://stark-store-ecom-r7idbindt-04gautams-projects.vercel.app/api/food/ship/" + product._id, {
       productId: product._id,
       ...form,  
     },

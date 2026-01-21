@@ -26,7 +26,7 @@ const Login = () => {
 
     try {
       const res = await axios.post(
-        "http://localhost:5000/api/auth/user/login",
+        "https://stark-store-ecom-r7idbindt-04gautams-projects.vercel.app/api/auth/user/login",
         formData,
         {
           headers: {

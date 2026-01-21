@@ -4,7 +4,7 @@ import 'dotenv/config';
 
 
 import app from './src/indexserver.js';
-import cors from "cors";
+// import cors from "cors";
 
 // start server
 
@@ -13,14 +13,10 @@ import connectDB from './src/db/db.js';
 
 connectDB();
 
-app.use(cors({
-  origin: "http://localhost:5000",
-  credentials: true,
-}));
-
-
-
-// module.exports = app; //[ for deployment ]
+// app.use(cors({
+//   origin: "http://localhost:5000",
+//   credentials: true,
+// }));
 
 export default app; //[ for deployment ]
 

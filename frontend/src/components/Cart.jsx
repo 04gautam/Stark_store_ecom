@@ -9,7 +9,7 @@ function Cart() {
 
   useEffect(() => {
 
-    const res = axios.get('http://localhost:5000/api/food/show/', {
+    const res = axios.get('https://stark-store-ecom-r7idbindt-04gautams-projects.vercel.app/api/food/show/', {
       
      
       headers: {

@@ -6,37 +6,6 @@ import { useEffect } from "react";
 
 const AddProduct = () => {
   
-  
-  // const [protectMsg, setProtectMsg] = useState("")
-  
-  // // let protectMsg = 11
-  // // console.log(protectMsg)
-  // useEffect(()=>{
-  //   // const navigate = useNavigate();
-  //    axios.get('http://localhost:5000/api/auth/admin/protect/admin', {
-      
-     
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     withCredentials: true,
-     
-  //   }).then(response => {
-  //     setProtectMsg(response.data.msg);
-  //     // console.log(response.data.msg);
-
-  //     if(protectMsg == "false"){
-  //       // console.log("no token");
-  //       return navigate("/");
-  //     }
-  //     if(protectMsg == "true"){
-  //       // console.log("yes token");
-  //       // setCreateMsg(response.data.msg);
-  //       navigate("/create");
-  //     }
-  //     // console.log(response.data.msg);
-  //   });
-  // },[]);
 
   const navigate = useNavigate();
   const [product, setProduct] = useState({
@@ -83,7 +52,7 @@ const AddProduct = () => {
 
     try {
       const res = await axios.post(
-        "http://localhost:5000/api/food/upload",
+        "https://stark-store-ecom-r7idbindt-04gautams-projects.vercel.app/api/food/upload",
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },

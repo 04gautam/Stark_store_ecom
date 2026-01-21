@@ -22,7 +22,7 @@ const HomeProducts = () =>{
 useEffect(() => {
 
     
-        axios.get('http://localhost:5000/api/food/products',{
+        axios.get('https://stark-store-ecom-r7idbindt-04gautams-projects.vercel.app/api/food/products',{
         // headers: {
         //   'Content-Type': 'application/json'
         // },
@@ -67,62 +67,3 @@ useEffect(() => {
 
 export default HomeProducts;
 
-
-
-
-
-
-// import axios from "axios";
-// import { useEffect, useState, useContext } from "react";
-// import ProductCard from "./ProductCard";
-// import Navbar from "./Navbar";
-// import Footer from "./Footer";
-// import HeaderSlider from "./HeaderSlider";
-// import { useNavigate } from "react-router-dom";
-// import { productContext } from "../App";
-
-// const HomeProducts = () => {
-
-//   const [products, setProducts] = useState([]);
-//   const { search } = useContext(productContext);        // 🔥 GET SEARCH TEXT HERE
-
-//   const navigate = useNavigate();
-
-//   useEffect(() => {
-//     axios
-//       .get("http://localhost:5000/api/food/products", {
-//         withCredentials: true,
-//       })
-//       .then((response) => {
-//         setProducts(response.data.products);
-//       })
-//       .catch((error) => {
-//         console.error("Error fetching products:", error);
-//         if (error) {
-//           return navigate("/login");
-//         }
-//       });
-//   }, []);
-
-//   // 🔥 FILTER PRODUCTS BASED ON SEARCH
-//   const filteredProducts = products.filter((p) =>
-//     p.name.toLowerCase().includes(search.toLowerCase())
-//   );
-
-//   return (
-//     <>
-//       <Navbar cartCount={2} />
-
-//       <div className="pt-10">
-//         <HeaderSlider />
-
-//         {/* 🔥 Send filtered products to ProductCard */}
-//         <ProductCard products={filteredProducts} />
-
-//         <Footer />
-//       </div>
-//     </>
-//   );
-// };
-
-// export default HomeProducts;

@@ -24,7 +24,8 @@ import 'dotenv/config';
 
 
 app.use(cors({
-    origin: "http://localhost:5173",
+    // origin: "http://localhost:5173",
+    origin: "https://stark-store-ecom-ycbe-qufb5i57e-04gautams-projects.vercel.app",
     credentials: true
 }));
 app.use(express.json());
