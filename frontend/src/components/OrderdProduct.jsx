@@ -15,7 +15,7 @@ function OrderdProduct() {
 
   const response = async () => {
     try {
-      const res = await axios.get('https://stark-store-ecom-r7idbindt-04gautams-projects.vercel.app/api/food/orderd/product', {
+      const res = await axios.get('https://stark-store-ecom.vercel.app/api/food/orderd/product', {
         withCredentials: true
       });
       setOrders(res.data.orders);

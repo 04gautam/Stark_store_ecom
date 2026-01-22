@@ -21,7 +21,7 @@ function SingleProduct() {
 
     useEffect(() => {
      axios.post(
-    `https://stark-store-ecom-r7idbindt-04gautams-projects.vercel.app/api/food/single/${id}`,
+    `https://stark-store-ecom.vercel.app/api/food/single/${id}`,
     {}, // body should be empty
     {
       withCredentials: true,
@@ -54,7 +54,7 @@ const addInCart = async () => {
 
     // console.log(product._id);
     try {
-      const res = await axios.post('https://stark-store-ecom-r7idbindt-04gautams-projects.vercel.app/api/food/cart', 
+      const res = await axios.post('https://stark-store-ecom.vercel.app/api/food/cart', 
       {
         productId: product._id,
     

@@ -29,7 +29,7 @@ const GlassNavbar = ({ cartCount = 0 }) => {
 
   const logoutHandler = async () => {
     const response = await axios.get(
-      "https://stark-store-ecom-r7idbindt-04gautams-projects.vercel.app/api/auth/user/logout",
+      "https://stark-store-ecom.vercel.app/api/auth/user/logout",
       { withCredentials: true }
     );
     navigate("/login");

@@ -1,8 +1,6 @@
 // require('dotenv').config();
 import 'dotenv/config';
 
-
-
 import app from './src/indexserver.js';
 // import cors from "cors";
 
@@ -14,11 +12,13 @@ import connectDB from './src/db/db.js';
 connectDB();
 
 // app.use(cors({
-//   origin: "http://localhost:5000",
+//   origin: "https://stark-store-ecom-ycbe-qufb5i57e-04gautams-projects.vercel.app",
 //   credentials: true,
 // }));
 
-export default app; //[ for deployment ]
+export default app; 
+
+//[ for deployment ]
 
 // app.listen(5000, () => {
 //     console.log("Server is running on port 5000");

@@ -28,7 +28,7 @@ const AdminRegister = () => {
 
     try {
       const res = await axios.post(
-        "https://stark-store-ecom-r7idbindt-04gautams-projects.vercel.app/api/auth/admin/register",
+        "https://stark-store-ecom.vercel.app/api/auth/admin/register",
         {
           ...formData,
           role: "admin", // 👑 admin role

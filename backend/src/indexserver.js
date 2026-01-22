@@ -22,12 +22,29 @@ import cors from 'cors';
 
 import 'dotenv/config';
 
+const allowedOrigins = [
+  "https://stark-store-ecom-ycbe.vercel.app"
+];
 
-app.use(cors({
-    // origin: "http://localhost:5173",
-    origin: "https://stark-store-ecom-ycbe-qufb5i57e-04gautams-projects.vercel.app",
+// app.use(cors({
+//     // origin: "http://localhost:5173",
+//     origin: "https://stark-store-ecom-ycbe.vercel.app",
+//     credentials: true
+// }));
+
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true
-}));
+  })
+);
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

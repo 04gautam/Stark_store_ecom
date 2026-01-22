@@ -22,10 +22,10 @@ const HomeProducts = () =>{
 useEffect(() => {
 
     
-        axios.get('https://stark-store-ecom-r7idbindt-04gautams-projects.vercel.app/api/food/products',{
-        // headers: {
-        //   'Content-Type': 'application/json'
-        // },
+        axios.get('https://stark-store-ecom.vercel.app/api/food/products',{
+        headers: {
+          'Content-Type': 'application/json'
+        },
         withCredentials: true
       }).then(response => { 
 

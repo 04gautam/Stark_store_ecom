@@ -52,7 +52,7 @@ const AddProduct = () => {
 
     try {
       const res = await axios.post(
-        "https://stark-store-ecom-r7idbindt-04gautams-projects.vercel.app/api/food/upload",
+        "https://stark-store-ecom.vercel.app/api/food/upload",
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },
