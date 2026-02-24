@@ -16,9 +16,12 @@ connectDB();
 //   credentials: true,
 // }));
 
+//[ for deployment ]
+
 export default app; 
 
-//[ for deployment ]
+// [for local testing...]
+
 
 // app.listen(5000, () => {
 //     console.log("Server is running on port 5000");

@@ -10,19 +10,30 @@ import { useNavigate } from "react-router-dom";
 export const showProductContext = createContext();
 
 
-const HomeProducts = () =>{
+const HomeProducts = ({results}) =>{
 
   const [product, setProduct] = useState([]);
-  // const [searchProduct, setSearchProduct] = useState([]);
+  const [searchProduct, setSearchProduct] = useState([]);
   const navigate = useNavigate();
 
 
+    useEffect(() => {
+      setSearchProduct(results);
+      
+    }, [results] );
+
+      
+
+
+
+// console.log(results);
   //I have to make here context here and have to put navbar in side context
 
 useEffect(() => {
 
     
         axios.get('https://stark-store-ecom.vercel.app/api/food/products',{
+        // axios.get('http://localhost:5000/api/food/products',{
         headers: {
           'Content-Type': 'application/json'
         },
@@ -39,14 +50,20 @@ useEffect(() => {
 
       });
       
-    }, []);
+
+      
+
+    }, [  navigate, setProduct, product]);
+  
     
+
+   
 
   return ( <>
 
      {/* <showProductContext.Provider value={{ product,setSearchProduct}}> */}
       
-     <Navbar cartCount={2} />
+     {/* <Navbar cartCount={2} /> */}
 
      {/* </showProductContext.Provider> */}
 
@@ -54,6 +71,8 @@ useEffect(() => {
       <div className="pt-10">
         <HeaderSlider />
   
+    <ProductCard products={searchProduct} />
+   {/* <ProductCard products={product} /> */}
 
     <ProductCard products={product} />
     <Footer />

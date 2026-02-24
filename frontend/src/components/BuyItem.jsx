@@ -4,6 +4,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { productContext } from "../App";
 import axios from "axios";
 import PayButton from "./Payment";
+import Navbar from "./Navbar";
+import Footer from "./Footer";
 
 const ShippingPage = () => {
 
@@ -11,6 +13,7 @@ const ShippingPage = () => {
 
     const [product, setProduct] = useState({});
     const [fill, setFill] = useState("");
+    const [loading, setLoading] = useState(false);
 
 const alertMsg = () =>{
 
@@ -32,7 +35,7 @@ const alertMsg = () =>{
 
     useEffect(() => {
       // axios.post(`http://localhost:5000/api/food/single/${id}`, 
-      axios.post(`https://stark-store-ecom.vercel.app/api/food/single/${id}`, 
+      axios.post(`https://stark-store-ecom.vercel.app/api/food/single/${id}`,  
         {}, // body should be empty
     {
       withCredentials: true,
@@ -78,15 +81,20 @@ const alertMsg = () =>{
 
     // console.log("let see")
   //   // console.log((form.address).length);
+
+  setLoading(true);
+
     if (
       !form.fullName || !form.email || !form.phone || !form.address || !form.city || !form.pincode
     ) {
-      alert("Please fill in all required fields.");
+      setFill("Please fill in all required fields.");
+      setLoading(false);
       return;
     }
 
 
     const res = await axios.post("https://stark-store-ecom.vercel.app/api/food/ship/" + product._id, {
+    // const res = await axios.post("http://localhost:5000/api/food/ship/" + product._id, {
       productId: product._id,
       ...form,  
     },
@@ -112,8 +120,9 @@ const alertMsg = () =>{
   if (!product)
     return <h2 className="text-center mt-20 text-black">No product found</h2>;
 
-  return (
-    <div className="items-center bg-black/20 py-20  px-4 min-w-full flex justify-center">
+  return (<>
+    <Navbar />
+    <div className="items-center bg-black/20 py-20 lg:mt-6 px-4 min-w-full flex justify-center">
 
       {/* Glassmorphism Container */}
       <div className="
@@ -227,6 +236,12 @@ const alertMsg = () =>{
     Choose Payment Method
   </h2>
 
+    { fill && 
+<div className="text-red-600 mt-2">
+  {fill}
+  </div>
+} 
+
   <div className="flex flex-col md:flex-row gap-4">
 
     {/* Cash on Delivery */}
@@ -237,7 +252,8 @@ const alertMsg = () =>{
         transition-all duration-200 hover:bg-orange-500
       "
     >
-      Cash on Delivery
+      {/* Cash on Delivery */}
+     {loading ? "Placing your order..." : "Cash on Delivery"}
     </button>
 
     {/* Online Payment */}
@@ -265,19 +281,20 @@ const alertMsg = () =>{
       <button
   onClick={alertMsg}
   className="
-    bg-green-400 text-white px-8 py-3 rounded-xl font-semibold text-lg
-    transition-all duration-200 hover:bg-green-500
+    bg-blue-600 text-white px-8 py-3 rounded-xl font-semibold text-lg
+    transition-all duration-200 hover:bg-blue-500
   "
 >
   Pay with Razorpay
 </button>
 
     )}
-{ fill && 
+{/* { fill && 
 <div className="text-red-600 mt-2">
   {fill}
   </div>
-}</div>
+} */}
+</div>
 
 </div>
 
@@ -286,6 +303,8 @@ const alertMsg = () =>{
 
       </div>
     </div>
+  <Footer />
+    </>
   );
 };
 

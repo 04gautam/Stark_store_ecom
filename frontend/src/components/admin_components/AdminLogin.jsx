@@ -25,7 +25,8 @@ const Login = () => {
 
     try {
       const res = await axios.post(
-        "http://https://stark-store-ecom.vercel.app/api/auth/admin/login",
+        "https://stark-store-ecom.vercel.app/api/auth/admin/login",
+        // "http://localhost:5000/api/auth/admin/login",
         formData,
         {
           headers: {
@@ -35,7 +36,12 @@ const Login = () => {
         }
       );
 
-      navigate("/create");
+      // console.log(res.data);
+      if(!res.data.success){
+        navigate("/admin/login");
+      }
+
+      navigate("/admin/panel");
     } catch (err) {
       setError("Invalid email or password. Please try again.");
     }

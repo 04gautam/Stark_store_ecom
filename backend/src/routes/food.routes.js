@@ -34,30 +34,69 @@ router.post("/upload",
 
 /* GET /api/food/ [protected] */
 
-router.get("/orderd/product", allMiddlewares.authUserMiddleware, async(req, res)=>{
-    // console.log(req.user)
+// router.get("/orderd/product",
+//      allMiddlewares.authUserMiddleware,
+//      foodController.orderdProduct)
+
+    // router.get("/orderd/product", async(req, res)=>{
+
+    //    try {
+    //            const userId = req.user._id;
+          
+    //           const orders = await orderModel.find({ user: userId }).populate('product');
+          
+    //           // console.log(orders);
+          
+    //           res.status(200).json({
+    //               message: "Orderd products fetched successfully",
+    //               orders
+    //           });
+              
+    //       } catch (error) {
+    //           res.status(500).json({
+    //               success: false,
+    //               message: "Error fetching ordered products",
+    //               error: error.message
+    //           }); 
+    //       }
+    // })
+
+
+//     router.get("/orderd/product", allMiddlewares.authUserMiddleware, async(req, res)=>{
+//     // console.log(req.user)
 
     
-    const userId = req.user._id;
+//     const userId = req.user._id;
 
-    const orders = await orderModel.find({ user: userId }).populate('product');
+//     const orders = await orderModel.find({ user: userId }).populate('product');
 
-    // console.log(orders);
+//     // console.log(orders);
 
-    res.status(200).json({
-        message: "Orderd products fetched successfully",
-        orders
-    });
+//     res.status(200).json({
+//         message: "Orderd products fetched successfully",
+//         orders
+//     });
     
 
-    // console.log("api/food/orderd/product is running....")
+//     // console.log("api/food/orderd/product is running....")
 
-})
+// })
+
+
+router.get("/orderd/product", allMiddlewares.authUserMiddleware, foodController.orderdProduct)
+
 
 router.get("/products", 
     // authMiddleware.authUserMiddleware,
     foodController.product);
     
+
+router.get("/orders",
+    // authMiddleware.authUserMiddleware,
+    foodController.allOrders);
+
+
+
 
 router.post("/single/:id", allMiddlewares.authUserMiddleware, (req, res)=>{
     const productId = req.params.id;
@@ -86,18 +125,20 @@ router.post("/ship/:id",
     allMiddlewares.authUserMiddleware,   
      foodController.shipProduct );
 
-router.delete("/delete/:id",
+router.post("/delete/product",
     // authMiddleware.authUserMiddleware,
      foodController.deleteProduct );
 
-
+router.get("/search/:keyword",
+    // authMiddleware.authUserMiddleware,
+    foodController.searchProducts);
 
 
 router.post('/cart',
     allMiddlewares.authUserMiddleware,
     foodController.addInCart)
 
-router.get('/show',
+router.get('/show/cart',
     allMiddlewares.authUserMiddleware,
     foodController.showCart)
 
@@ -116,10 +157,15 @@ router.get('/save',
     // authMiddleware.authUserMiddleware,
     foodController.getSaveFood
 )
+
 router.post('/verify',
     // authMiddleware.authUserMiddleware,
     foodController.verifyPayment
 )
 
+router.get('/delete/cart',
+    // authMiddleware.authUserMiddleware,
+    foodController.deleteCartItem
+)
 // module.exports = router
 export default router;

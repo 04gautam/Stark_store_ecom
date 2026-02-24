@@ -18,6 +18,7 @@ import Razorpay from "razorpay";
 import { v4 as uuid } from "uuid";
 import crypto from "crypto";
 import nodemailer from "nodemailer";
+// import { is } from 'type-is';
 
 async function createProduct(req, res) {
 
@@ -49,10 +50,6 @@ async function createProduct(req, res) {
     })
 }
 
-
-
-
-
 async function getFoodItems(req, res) {
     const foodItems = await foodModel.find({})
     res.status(200).json({
@@ -60,7 +57,7 @@ async function getFoodItems(req, res) {
         foodItems
     })
 }
-
+    
 
 async function addInCart(req, res){
 
@@ -92,19 +89,24 @@ async function addInCart(req, res){
   
  async function showCart (req, res){
 
-  
-    const user = req.user;  
+    try {
+        const user = req.user;  
     
     const cartItems = await cartModel.find({ user: user._id }).populate('cartProduct');
 
     if (!cartItems || cartItems.length === 0) {
         return res.status(404).json({ message: "No items in cart" });
     }
-// console.log(cartItems)
+    // console.log(cartItems)
     res.status(200).json({
         message: "Cart items retrieved successfully",
-        cartItems
+        cartItems:cartItems
     });
+    } catch (error) {
+        console.error("Error showing cart:", error);
+        return res.status(500).json({ message: "Error showing cart" });
+    }
+  
 }
 
 
@@ -207,16 +209,57 @@ async function getSaveFood(req, res) {
 
 }
 
-const product = async(req, res) => {
 
-    const allProducts = await productModel.find();
+const searchProducts = async (req, res) => {
+    // let query = " "
 
-    // console.log(req.cookies.token)
+
+    try {
+        const query = req.query.q; // Default to empty string if 'q' is not provided  
+    // console.log("Search query:", query);
+    // res.send("query: ", query)
+
+    if (!query) {
+
+        return res.status(400).json({ message: "Query parameter 'q' is required" });
+    }   
+
+     const searchedProducts = await productModel.find({
+      name: { $regex: query, $options: "i" }
+
+    });
+
+    // console.log("Searched products:", searchedProducts);
 
     res.status(200).json({
-        success: true,
+        message: "Products fetched successfully",
+        products: searchedProducts
+    });
+    } catch (error) {
+        console.error("Error searching products:", error);
+        return res.status(500).json({ message: "Error searching products" });
+    }
+
+    
+
+}
+
+const product = async(req, res) => {
+    try {
+
+    const allProducts = await productModel.find();
+   
+   
+      res.status(200).json({
+        success: true, 
         products: allProducts
-    })  
+    }) 
+
+
+    } catch (error) {
+        console.log(error)
+    }
+
 };
 
 const shipProduct = async (req, res)=>{
@@ -224,15 +267,8 @@ const shipProduct = async (req, res)=>{
     const userId = req.user.id
     const ispaid = req.body.ispaid
     const buyerData = req.body;
-    
-    // console.log(productId)
-    // console.log(userId)
-    // console.log(buyerData)
 
-    // console.log("here is the buyer data: ", buyerData)
-
-    // const buyerData = req.body;//
-    // console.log("here is the ship data: ")//
+    // console.log("let see is this working both of them or not: ")
 
     // const product = await productModel.findById(productId);  //
     const order = await orderModel.create({
@@ -249,19 +285,9 @@ const shipProduct = async (req, res)=>{
 
     // console.log("Order created: ", order)
 
-    const product = await productModel.findById(productId);
-
-    // console.log("let see is this working both of them or not: ")
-
-
-//   console.log(product);
-
-
-// const nodemailer = require("nodemailer");
-
+const product = await productModel.findById(productId);
 
 // Create a transporter
-
 const transporter = nodemailer.createTransport({
   service: "gmail", // You can use 'hotmail', 'yahoo', or custom SMTP too
   auth: {
@@ -269,7 +295,6 @@ const transporter = nodemailer.createTransport({
     pass: "buptobsfyqyjfvil",     // Use app password, not your Gmail password
     },
 });
-
 // Email options
 const mailOptions = {
   from: "sunm13398@gmail.com",
@@ -342,22 +367,40 @@ const mailOptions = {
   `,
 };
 
-transporter.sendMail(mailOptions, (error, info) => {
-  if (error) {
-    return console.log("Error:", error);
-  }
-  //console.log("Email sent:", info.response);
-});
-// Send the email
+    try {
+  const info = await transporter.sendMail(mailOptions);
 
-   
+//   console.log("Email sent:", info.response);
 
-    res.status(200).json({
-        success: true,
-        message: "Order placed successfully",
+  return res.status(200).json({
+    success: true,
+    message: "Order placed successfully",
+  });
+
+} catch (error) {
+  console.error("Mail error:", error);
+
+  return res.status(500).json({
+    success: false,
+    message: "Email sending failed",
+  });
+}
+
+// transporter.sendMail(mailOptions, (error, info) => {
+//   if (error) {
+//     return console.log("Error:", error);
+//   }
+// //   console.log("Email sent:", info.response);
+
+// if (info.response) {
+// res.status(200).json({
+//         success: true,
+//         message: "Order placed successfully",
         
-    });  
-
+//     });  
+// }
+// });
+// Send the email
 }
 
 
@@ -414,7 +457,8 @@ const verifyPayment = (req, res) => {
 
 
 const deleteProduct = (req, res)=>{
-    const productId = req.params.id;
+    const productId = req.body.productId;
+    // console.log(productId)
     productModel.findByIdAndDelete(productId)
     .then((product)=>{
         res.status(200).json({
@@ -428,21 +472,77 @@ const deleteProduct = (req, res)=>{
             message: "Error deleting product"
         })
     } )
+
+    // res.send("done")
 } 
 
-// module.exports = {
-//     createProduct,
-//     getFoodItems,
-//     showCart,
-//     addInCart,
-//     saveFood,
-//     Order,
-//     getSaveFood,
-//     product,
-//     shipProduct,
-//     deleteProduct,
-//     verifyPayment
-// }
+
+const allOrders = async (req, res) => {
+  try {
+    const allOrders = await orderModel.find().populate('product');
+    res.status(200).json({
+      data: allOrders,
+      success: true,
+      allOrdersCount: allOrders.length
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: "Error fetching all orders",
+      error: err.message
+    });
+  }
+};
+
+
+const deleteCartItem = async (req, res) => {
+  const cartItemId = req.query.q;
+//   console.log("Attempting to delete cart item with ID:", cartItemId);
+//   res.send("done")
+    try {
+
+    //   const deletedItem = await cartModel.findByIdAndDelete(cartItemId);
+      const deletedItem = await cartModel.findOneAndDelete({ cartProduct: cartItemId });
+        res.status(200).json({
+            success: true,
+            message: "Cart item deleted successfully",
+            deletedItem
+        });
+
+        // console.log(deletedItem)
+    } catch (err) {
+        res.status(500).json({
+            success: false,
+            message: "Error deleting cart item",
+            error: err.message
+        });
+    }   
+}
+
+const orderdProduct = async (req, res) => {
+      
+    try {
+         const userId = req.user._id;
+    
+        const orders = await orderModel.find({ user: userId }).populate('product');
+    
+        // console.log(orders);
+    
+        res.status(200).json({
+            message: "Orderd products fetched successfully",
+            orders
+        });
+        
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Error fetching ordered products",
+            error: error.message
+        }); 
+    }
+
+}
+
 
 const foodController = {
     createProduct,
@@ -455,7 +555,11 @@ const foodController = {
     product,
     shipProduct,
     deleteProduct,
-    verifyPayment
+    verifyPayment,
+    allOrders,
+    searchProducts,
+    deleteCartItem,
+    orderdProduct
 };
 
 export default foodController;

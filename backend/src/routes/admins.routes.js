@@ -4,9 +4,10 @@
 // const authController = require("../controllers/auth.controller")
 
 import express from 'express';
-import * as foodPartnerController from "../controllers/food-partner.controller.js";
+// import * as foodPartnerController from "../controllers/food-partner.controller.js";
 import * as authMiddleware from "../middlewares/auth.middleware.js";
-import * as authController from "../controllers/auth.controller.js";
+// import * as authController from "../controllers/auth.controller.js";
+import loginUserController from "../controllers/auth.controller.js";
 
 const router = express.Router();
 
@@ -38,9 +39,9 @@ const router = express.Router();
 // })
 
 
-router.post("/register", authController.registerAdmin)
+router.post("/register", loginUserController.registerAdmin)
 
-router.post("/login", authController.loginAdmin)
+router.post("/login", loginUserController.loginAdmin)
 
 // module.exports = router;
 export default router;

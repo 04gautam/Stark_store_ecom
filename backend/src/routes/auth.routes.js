@@ -12,15 +12,15 @@ router.post('/user/login', authController.loginUser)
 router.get('/user/logout', authController.logoutUser)
 
 
-router.get("/", (req, res)=>{
-    res.send("auth route is working...")
-})
+// router.get("/", (req, res)=>{
+//     res.send("auth route is working...")
+// })
 
 
 
 // food partner auth APIs
-// router.post('/food-partner/register', authController.registerAdmin)
-// router.post('/food-partner/login', authController.loginFoodPartner)
+// router.post('/admin/register', authController.registerAdmin)
+// router.post('/admin/login', authController.loginAdmin)
 
 
 
@@ -28,6 +28,4 @@ router.get("/", (req, res)=>{
 
 
 
-// module.exports = router;
-// export default router;
 export default router;

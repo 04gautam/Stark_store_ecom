@@ -11,8 +11,8 @@ import { useEffect } from "react";
 // import { set } from "mongoose";
 
 
-const GlassNavbar = (props) => {
-  const { cartCount, setResults } = props;  
+const AdminNavbar = (props) => {
+  const { cartCount, setResults } = props;
  
   const [open, setOpen] = useState(false);
 
@@ -29,7 +29,8 @@ const searchProducts = () => {
    
 
      axios.get(
-      `https://stark-store-ecom.vercel.app/api/food/search/products?q=${query}`
+       `https://stark-store-ecom.vercel.app/api/food/search/products?q=${query}`
+       // `http://localhost:5000/api/food/search/products?q=${query}`
   //  "http://localhost:5000/api/food/products?q=" + query
     ).then((res) => {
       setResults(res.data.products);
@@ -46,12 +47,12 @@ const searchProducts = () => {
 
 
   const logoutHandler = async () => {
-    const response = await axios.get(
-      "https://stark-store-ecom.vercel.app/api/auth/user/logout",
-      // "http://localhost:5000/api/auth/user/logout",
-      { withCredentials: true }
-    );
-    navigate("/login");
+    // const response = await axios.get(
+    //   // "https://stark-store-ecom.vercel.app/api/auth/user/logout",
+    //   "http://localhost:5000/api/auth/user/logout",
+    //   { withCredentials: true }
+    // );
+    navigate("/admin/login");
   };
 
   return (
@@ -62,7 +63,7 @@ const searchProducts = () => {
       left-0 
       z-50 
       backdrop-blur-xl 
-      bg-white/50 
+      bg-white/40 
       border-b 
       border-white/20 
       shadow-lg 
@@ -71,16 +72,15 @@ const searchProducts = () => {
       py-4 
       flex 
       items-center 
-      
       justify-between
     ">
       {/* Logo */}
       <h1 className="text-2xl font-bold tracking-wide">
-        <Link to="/">STARK<span className="text-gray-500">Store</span></Link>
+        <Link to="/">STARK<span className="text-gray-500">Store</span> <span className="text-orange-500">Admin</span></Link>
       </h1>
 
       {/* Search (Desktop) */}
-       <div className="hidden md:flex items-center lg:border-2 lg:border-gray-500 bg-white/20 backdrop-blur-xl px-4 py-2 rounded-xl border border-white/10">
+       {/* <div className="hidden md:flex items-center lg:border-2 lg:border-gray-500 bg-white/20 backdrop-blur-xl px-4 py-2 rounded-xl border border-white/10">
         <FiSearch size={20} />
         <input
           type="text"
@@ -92,7 +92,7 @@ const searchProducts = () => {
         />
 
         <button className="bg-black text-white px-4 py-1 rounded-lg hover:bg-gray-700 transition-colors duration-200" onClick={searchProducts}>Search</button>
-      </div> 
+      </div>  */}
       <div>
  
 
@@ -101,14 +101,14 @@ const searchProducts = () => {
       {/* Menu + Cart (Desktop) */}
       <div className="hidden md:flex items-center gap-10 mr-8">
         <ul className="flex gap-8 text-lg font-medium">
-          <li><NavLink to="/" className={({ isActive }) => (isActive ? "text-orange-600" : "")}>Home</NavLink></li>
+          <li><NavLink to="/admin/create" className={({ isActive }) => (isActive ? "text-orange-600" : "")}>Create Product</NavLink></li>
           {/* <li>Products</li> */}
-          <li><NavLink to="/orderd/product" className={({ isActive }) => (isActive ? "text-orange-600" : "") }>Orders</NavLink></li>
+          <li><NavLink to="/admin/allorders" className={({ isActive }) => (isActive ? "text-orange-600" : "")}>Orders</NavLink></li>
           <li onClick={() => logoutHandler()} className="hover:text-red-500 cursor-pointer duration-200">Logout</li>
         </ul>
 
         {/* Cart */}
-        <div className="relative cursor-pointer">
+        {/* <div className="relative cursor-pointer">
           <Link to="/cart">
             <FiShoppingCart size={25} />
           </Link>
@@ -127,9 +127,7 @@ const searchProducts = () => {
               {cartCount}
             </span>
           )}
-        </div>
-
-        
+        </div> */}
       </div>
 
       {/* Mobile Menu Button */}
@@ -158,7 +156,7 @@ const searchProducts = () => {
         ">
 
           {/* Mobile Search */}
-          <div className="flex items-center justify-space-between ring bg-white/20 px-4 py-2 rounded-xl  border border-white/30">
+          {/* <div className="flex items-center justify-space-between ring bg-white/20 px-4 py-2 rounded-xl  border border-white/30">
           
             <FiSearch size={20} />
             <input
@@ -170,16 +168,16 @@ const searchProducts = () => {
         />
 
         <button className="bg-black text-white px-4 py-1 rounded-lg hover:bg-gray-700 transition-colors duration-200" onClick={searchProducts}>Search</button>
-          </div> 
+          </div>  */}
 
           <ul className="flex flex-col items-center gap-4 text-lg font-medium">
-            <li><NavLink to="/" className={({ isActive }) => (isActive ? "text-orange-600" : "")}>Home</NavLink></li>
+            <li><NavLink to="/admin/create" className={({ isActive }) => (isActive ? "text-orange-600" : "")}>Create Product</NavLink></li>
             {/* <li>Products</li> */}
-            <li><NavLink to="/orderd/product" className={({ isActive }) => (isActive ? "text-orange-600" : "")}>Orders</NavLink></li>
+            <li><NavLink to="/admin/allorders" className={({ isActive }) => (isActive ? "text-orange-600" : "")}>All Orders</NavLink></li>
             <li onClick={() => logoutHandler()} className="hover:text-red-500 cursor-pointer duration-200">Logout</li>
           </ul>
 
-          <div className="flex items-center gap-2 cursor-pointer mt-3">
+          {/* <div className="flex items-center gap-2 cursor-pointer mt-3">
             <Link to="/cart">
             <FiShoppingCart size={25} />
             </Link>
@@ -188,7 +186,7 @@ const searchProducts = () => {
                 {cartCount}
               </span>
             )}
-          </div>
+          </div> */}
         </div>
       )}
 
@@ -198,4 +196,4 @@ const searchProducts = () => {
   );
 };
 
-export default GlassNavbar;
+export default AdminNavbar;

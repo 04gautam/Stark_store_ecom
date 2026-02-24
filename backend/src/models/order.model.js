@@ -9,7 +9,10 @@ const orderSchema = new mongoose.Schema({
   address: String,
   city: String,
   pincode: String,
-  ispaid: Boolean,
+  ispaid: {
+    type: Boolean,
+    default: false
+  },
 
   user: {
     type: mongoose.Schema.Types.ObjectId,

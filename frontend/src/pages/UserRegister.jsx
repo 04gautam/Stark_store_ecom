@@ -35,6 +35,7 @@ const Register = () => {
       try{
 
       const res = await axios.post("https://stark-store-ecom.vercel.app/api/auth/user/register", formData,{
+      // const res = await axios.post("http://localhost:5000/api/auth/user/register", formData,{
         headers: { 
           'Content-Type': 'application/json'
         },

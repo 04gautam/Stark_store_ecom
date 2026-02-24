@@ -140,11 +140,11 @@ async function registerAdmin(req, res) {
 
     })
 
-    const token = jwt.sign({
-        id: admin._id,
-    }, process.env.JWT_SECRET)
+    // const token = jwt.sign({
+    //     id: admin._id,
+    // }, process.env.JWT_SECRET)
 
-    res.cookie("adminToken", token)
+    // res.cookie("adminToken", token)
 
     res.status(201).json({
         message: "Food partner registered successfully",
@@ -181,11 +181,11 @@ async function loginAdmin(req, res) {
         })
     }
 
-    const token = jwt.sign({
-        id: foodPartner._id,
-    }, process.env.JWT_SECRET)
-
-    res.cookie("adminToken", token)
+    // const token = jwt.sign({
+    //     id: foodPartner._id,
+    // }, process.env.JWT_SECRET)
+ 
+    // res.cookie("adminToken", token)
 
     res.status(200).json({
         message: "Food partner logged in successfully",

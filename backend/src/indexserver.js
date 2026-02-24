@@ -14,7 +14,7 @@ app.use(cookieParser());
 
 import authRoutes from './routes/auth.routes.js';
 import foodRoutes from './routes/food.routes.js';
-// import adminsRoutes from './routes/admins.routes.js';
+import adminsRoutes from './routes/admins.routes.js';
 import jwt from "jsonwebtoken"
 import cors from 'cors';
 
@@ -22,15 +22,20 @@ import cors from 'cors';
 
 import 'dotenv/config';
 
+//[for deployment...]
 const allowedOrigins = [
   "https://stark-store-ecom-ycbe.vercel.app"
 ];
 
+
+//[for local testing...]
 // app.use(cors({
-//     // origin: "http://localhost:5173",
-//     origin: "https://stark-store-ecom-ycbe.vercel.app",
+//     origin: "http://localhost:5173",
+   
 //     credentials: true
 // }));
+
+// [for development...]
 
 app.use(
   cors({
@@ -53,10 +58,11 @@ app.use(express.urlencoded({ extended: true }));
 // })
 
 app.use('/api/auth', authRoutes);
+
 app.use('/api/food', foodRoutes);
 
 
-// app.use('/api/auth/admin', adminsRoutes);
+app.use('/api/auth/admin', adminsRoutes);
 
 
 // module.exports = app;

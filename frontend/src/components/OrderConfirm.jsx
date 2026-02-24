@@ -30,7 +30,7 @@ function OrderConfirm() {
     </p>
 
     {/* Order Summary Card */}
-    <div className="bg-gray-100 rounded-xl p-6 text-left mb-6 shadow-inner">
+    {/* <div className="bg-gray-100 rounded-xl p-6 text-left mb-6 shadow-inner">
       <h2 className="text-lg font-semibold text-gray-800 mb-4">
         Order Summary
       </h2>
@@ -54,7 +54,7 @@ function OrderConfirm() {
         <span className="font-semibold text-gray-800">Total:</span>
         <span className="font-semibold text-gray-800">₹ 1299</span>
       </div>
-    </div>
+    </div> */}
 
     {/* Continue Shopping Button */}
     <a

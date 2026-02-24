@@ -53,6 +53,7 @@ const AddProduct = () => {
     try {
       const res = await axios.post(
         "https://stark-store-ecom.vercel.app/api/food/upload",
+        // "http://localhost:5000/api/food/upload",
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },
@@ -97,9 +98,6 @@ const AddProduct = () => {
       
 //    console.log(error)
     
-
-
-
     }
   };
 
@@ -108,20 +106,20 @@ const AddProduct = () => {
 <>
  
 
-   <div className="min-h-screen bg-linear-to-br from-gray-900 via-purple-900 to-black flex justify-center items-center p-6 ">
+   <div className="min-h-screen bg-linear-to-br  from-gray-900 via-purple-900 to-black flex justify-center items-center p-1 lg:p-6 ">
 
 
 
 {createMsg}
 
 
-      <div className="w-full max-w-6xl bg-white/95 backdrop-blur-lg rounded-3xl shadow-2xl overflow-hidden">
+      <div className="w-full max-w-6xl bg-white/95 backdrop-blur-lg  lg:rounded-3xl shadow-2xl overflow-hidden">
 
 
         {/* HeadTitle */}
-        <div className="bg-linear-to-r from-indigo-600 to-purple-700 px-8 py-10 text-center">
+        <div className="bg-linear-to-r from-indigo-600 to-purple-700 px-8 py-4 text-center">
           <h1 className="text-4xl font-extrabold text-white tracking-wide">
-            StarkStore
+            STARK<span className="text-orange-500">Store</span>
           </h1>
           <p className="text-purple-200 mt-2 text-lg font-medium">
             Add New Product
@@ -237,7 +235,7 @@ const AddProduct = () => {
             </div>
 
             {/* Category */}
-            <div>
+            {/* <div>
               <label className="block text-md font-semibold text-gray-800 mb-2">
                 Category
               </label>
@@ -257,7 +255,7 @@ const AddProduct = () => {
                 <option>Books</option>
                 <option>Other</option>
               </select>
-            </div>
+            </div> */}
 
             {/* Submit Button */}
             <button
