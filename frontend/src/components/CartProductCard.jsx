@@ -23,7 +23,7 @@ const CartProductCard = ({ products }) =>{
        axios.get(
       `https://stark-store-ecom.vercel.app/api/food/delete/cart?q=${item}`
       // `http://localhost:5000/api/food/delete/cart?q=${item}`
-  //  "http://localhost:5000/api/food/products?q=" + query
+ 
     ).then((res) => {
       // console.log(res);
 
@@ -59,64 +59,186 @@ const CartProductCard = ({ products }) =>{
   return ( <>
 
 
-   <div className="w-full flex justify-center py-10 px-4">
-      {createMsg}
-      <div className="grid 
-        grid-cols-1 
-        sm:grid-cols-2 
-        md:grid-cols-3 
-        lg:grid-cols-4
-       
-        gap-8 
-        w-full max-w-7xl">
+   
+   <div className="w-full flex justify-center py-8 px-4 bg-linear-to-b from-transparent to-gray-50/50">
+        {createMsg}
+        <div
+          className="grid 
+          grid-cols-1 
+          sm:grid-cols-2 
+          md:grid-cols-3 
+          lg:grid-cols-4
+          gap-8 
+          w-full max-w-7xl"
+        >
+          {products.map((item, index) => (
+            <div
+              key={index}
+              className="group
+                bg-white/70 
+                backdrop-blur-lg 
+                rounded-3xl 
+                overflow-hidden 
+                shadow-[0_8px_30px_rgba(0,0,0,0.08)]
+                hover:shadow-[0_20px_40px_rgba(0,0,0,0.15)]
+                border 
+                border-white/40
+                transition-all 
+                duration-500 
+                hover:-translate-y-1
+                flex 
+                flex-col
+                relative
+                before:absolute
+                before:inset-0
+                before:bg-linear-to-b
+                before:from-transparent
+                before:via-transparent
+                before:to-white/10
+                before:pointer-events-none
+              "
+            >
+              <Link to={`/product/${item._id}`} className="block overflow-hidden relative">
+                {/* Product Image with elegant overlay */}
+                <div className="relative overflow-hidden aspect-square">
+                  <img
+                    src={item.photo}
+                    alt={item.name}
+                    className="w-full h-full object-cover transform group-hover:scale-110 duration-700 ease-out"
+                  />
+                  <div className="absolute inset-0 bg-linear-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                </div>
 
-        {products.map((item, index) => (
-          
-          
-          <div key={index} className="bg-white rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl 
-              duration-300 flex flex-col">
+                {/* Discount Badge - repositioned for glass effect */}
+                <div className="absolute top-4 right-4 bg-orange-500/90 backdrop-blur-sm text-white text-xs font-bold px-3 py-1.5 rounded-full border border-white/30 shadow-lg">
+                  20% OFF
+                </div>
 
-            {/* Product Image */}
-            <Link to={`/product/${item._id}`} >
-            <div className="overflow-hidden">
-              <img
-                src={item.photo}
-                alt={item.name}
-                className="w-full h-60 object-cover transform hover:scale-110 duration-300"
-              />
+                {/* Product Details */}
+                <div className="p-5 text-gray-800 flex flex-col gap-2 bg-white/40 backdrop-blur-[2px]">
+                  <h2 className="text-xl font-bold line-clamp-1 group-hover:text-orange-600 transition-colors duration-300">
+                    {item.name}
+                  </h2>
+
+                  {/* Rating with refined styling */}
+                  <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-0.5">
+                      {[1, 2, 3, 4].map((star) => (
+                        <img
+                          key={star}
+                          className="h-4 w-4 filter drop-shadow-sm"
+                          src="https://cdn-icons-png.flaticon.com/512/2107/2107957.png"
+                          alt="star_icon"
+                        />
+                      ))}
+                      <img
+                        className="h-4 w-4 opacity-60"
+                        src="https://cdn-icons-png.flaticon.com/512/2107/2107737.png"
+                        alt="star_dull_icon"
+                      />
+                    </div>
+                    <p className="text-sm text-gray-600 font-medium">(4.5)</p>
+                  </div>
+
+                  <p className="text-sm text-gray-600/90 line-clamp-2 leading-relaxed">
+                    {item.description.slice(0, 65)}...
+                  </p>
+
+                  <h3 className="text-2xl font-bold mt-2 flex items-baseline gap-2">
+                    ₹ {item.price}
+                    <span className="text-sm font-medium text-orange-600/80 line-through decoration-2 decoration-orange-300/50">
+                      ₹ {Math.round(item.price * 1.25)}
+                    </span>
+                  </h3>
+                </div>
+              </Link>
+
+              {/* Buttons - redesigned with glass effect */}
+              <div className="px-5 pb-5 pt-1 flex justify-between gap-3 bg-white/30 backdrop-blur-sm border-t border-white/30">
+                <button
+                  onClick={() => deleteItem(item._id)}
+                  className="w-1/2 
+                    bg-linear-to-r from-orange-500 to-orange-600 
+                    text-white 
+                    py-2.5 
+                    rounded-xl 
+                    hover:shadow-lg 
+                    hover:scale-105 
+                    active:scale-95
+                    transition-all 
+                    duration-300
+                    font-medium
+                    text-sm
+                    border
+                    border-white/20
+                    backdrop-blur-sm
+                    flex
+                    items-center
+                    justify-center
+                    gap-2
+                    group/btn"
+                >
+                  <svg
+                    className="w-4 h-4 transition-transform group-hover/btn:rotate-12"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                    />
+                  </svg>
+                  Delete Item
+                </button>
+
+                <Link
+                  className="w-1/2 
+                    bg-white/80 
+                    backdrop-blur-sm
+                    border 
+                    border-gray-200/80
+                    text-gray-800 
+                    py-2.5 
+                    rounded-xl 
+                    hover:bg-white 
+                    hover:border-orange-300
+                    hover:text-orange-600
+                    hover:shadow-md
+                    active:scale-95
+                    transition-all 
+                    duration-300
+                    font-medium
+                    text-sm
+                    flex
+                    items-center
+                    justify-center
+                    gap-2
+                    group/btn"
+                  to={`/product/${item._id}`}
+                >
+                  <svg
+                    className="w-4 h-4 transition-transform group-hover/btn:scale-110"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M13 10V3L4 14h7v7l9-11h-7z"
+                    />
+                  </svg>
+                  Buy Now
+                </Link>
+              </div>
             </div>
-            </Link>
-            {/* Product Details */}
-            <div className="p-4 text-black flex flex-col gap-2">
-              <h2 className="text-xl font-semibold">{item.name}</h2>
-              <p className="text-sm text-gray-700">{item.description.slice(0, 45)}</p>
-
-              <h3 className="text-lg font-bold mt-2">
-                ₹ {item.price}
-              </h3>
-            </div>
-
-            {/* Buttons */}
-            <div className="px-4 pb-4 flex justify-between gap-3">
-              <button onClick={()=>deleteItem(item._id)} className="w-1/2 bg-red-800 text-white py-2 rounded-xl hover:bg-red-700 duration-200">
-               Delete Item
-              </button>
-
-              <button className="w-1/2 bg-white border border-black py-2 rounded-xl hover:bg-gray-200 duration-200">
-                Buy Now
-              </button>
-            </div>
-
-          </div>
-          
-          
-        ))}
-
+          ))}
+        </div>
       </div>
-
-    </div>
-    
-  
 
 
   </> );

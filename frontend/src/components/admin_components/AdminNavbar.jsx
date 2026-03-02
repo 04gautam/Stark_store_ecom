@@ -30,8 +30,8 @@ const searchProducts = () => {
 
      axios.get(
        `https://stark-store-ecom.vercel.app/api/food/search/products?q=${query}`
-       // `http://localhost:5000/api/food/search/products?q=${query}`
-  //  "http://localhost:5000/api/food/products?q=" + query
+      //  `http://localhost:5000/api/food/search/products?q=${query}`
+  
     ).then((res) => {
       setResults(res.data.products);
     });
@@ -73,10 +73,13 @@ const searchProducts = () => {
       flex 
       items-center 
       justify-between
+      
     ">
       {/* Logo */}
       <h1 className="text-2xl font-bold tracking-wide">
-        <Link to="/">STARK<span className="text-gray-500">Store</span> <span className="text-orange-500">Admin</span></Link>
+        <Link to="/admin/panel">
+        STARK<span className="text-gray-500">Store</span> <span className="text-orange-500">Admin</span>
+        </Link>
       </h1>
 
       {/* Search (Desktop) */}

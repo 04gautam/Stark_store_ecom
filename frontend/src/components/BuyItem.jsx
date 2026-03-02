@@ -35,7 +35,7 @@ const alertMsg = () =>{
 
     useEffect(() => {
       // axios.post(`http://localhost:5000/api/food/single/${id}`, 
-      axios.post(`https://stark-store-ecom.vercel.app/api/food/single/${id}`,  
+        axios.post(`https://stark-store-ecom.vercel.app/api/food/single/${id}`,  
         {}, // body should be empty
     {
       withCredentials: true,
@@ -122,7 +122,7 @@ const alertMsg = () =>{
 
   return (<>
     <Navbar />
-    <div className="items-center bg-black/20 py-20 lg:mt-6 px-4 min-w-full flex justify-center">
+    <div className="items-center bg-black/20 py-14 lg:mt-6 px-4 min-w-full flex justify-center">
 
       {/* Glassmorphism Container */}
       <div className="
@@ -199,7 +199,7 @@ const alertMsg = () =>{
           {/* Right - Product Info */}
           <div className="
             w-full lg:w-1/3 bg-white/10 border border-white/20
-            p-5 rounded-2xl shadow-xl space-y-4
+            p-4 rounded-2xl shadow-xl space-y-4
           ">
 
             <h2 className="text-xl text-black font-semibold">Order Summary</h2>
@@ -215,15 +215,23 @@ const alertMsg = () =>{
               {product.description}
             </p>
 
-            <p className="text-green-400 text-xl font-bold">
+            {/* <p className="text-green-400 text-xl font-bold">
               ₹ {product.price}
-            </p>
+            </p> */}
 
             {/* Total */}
             <div className="pt-3 border-t border-white/20">
-              <p className="text-black text-lg">
+              {/* <p className="text-black text-lg">
                 <span className="font-semibold">Total:</span> ₹ {product.price}
-              </p>
+              </p> */}
+
+    <h3 className="text-2xl font-bold mt-2 flex items-baseline gap-2">
+                    ₹ {product.price}
+                    <span className="text-sm font-medium text-orange-600/80 line-through decoration-2 decoration-orange-600/50">
+                      ₹ {Math.round(product.price * 1.25)}
+                    </span>
+                  </h3>
+
             </div>
           </div>
 
@@ -281,8 +289,8 @@ const alertMsg = () =>{
       <button
   onClick={alertMsg}
   className="
-    bg-blue-600 text-white px-8 py-3 rounded-xl font-semibold text-lg
-    transition-all duration-200 hover:bg-blue-500
+    bg-gray-500 text-white px-8 py-3 rounded-xl font-semibold text-lg
+    transition-all duration-200 hover:bg-gray-600
   "
 >
   Pay with Razorpay

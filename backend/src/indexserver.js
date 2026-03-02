@@ -22,10 +22,6 @@ import cors from 'cors';
 
 import 'dotenv/config';
 
-//[for deployment...]
-const allowedOrigins = [
-  "https://stark-store-ecom-ycbe.vercel.app"
-];
 
 
 //[for local testing...]
@@ -35,8 +31,14 @@ const allowedOrigins = [
 //     credentials: true
 // }));
 
-// [for development...]
 
+//[for deployment...]
+const allowedOrigins = [
+  "https://stark-store-ecom-ycbe.vercel.app"
+];
+
+
+// [for development...]
 app.use(
   cors({
     origin: function (origin, callback) {

@@ -5,7 +5,7 @@ import Navbar from "./Navbar";
 import Footer from "./Footer";
 import HeaderSlider from "./HeaderSlider";
 import SingleProduct from "./SingleProduct";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export const showProductContext = createContext();
 
@@ -74,7 +74,15 @@ useEffect(() => {
     <ProductCard products={searchProduct} />
    {/* <ProductCard products={product} /> */}
 
+{/* <Link to="/products" className="flex justify-center mt-10">
+<div className="bg-red-500 text-white px-6 py-3 rounded-lg hover:bg-red-600 transition-colors duration-200">
+  View All Products
+</div>
+</Link> */}
+<section id="showproducts" className="mt-10">
     <ProductCard products={product} />
+  
+</section>
     <Footer />
 
     </div>

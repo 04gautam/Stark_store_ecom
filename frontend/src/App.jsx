@@ -20,12 +20,16 @@ import AllOrders from './components/admin_components/AdminAllOrders'
 import AdminPanel from './components/admin_components/AdminPanel'
 import AdminNavbar from './components/admin_components/AdminNavbar'
 import Error404Page from './pages/Error404page'
+// import { useNavigate } from 'react-router-dom'
+
   export const productContext = createContext();
 
 function App() {
+     const [cartCount, setCartCount] = useState(0);
      const [products, setProducts] = useState([]);
      const [results, setResults] = useState([]);
 
+    //  console.log(cart.length)
 
   useEffect(() => { 
 
@@ -37,14 +41,15 @@ function App() {
       setProducts(response.data.products);
       // console.log(response.data.products);
 
+      
     } catch (error) {
       console.error('Error fetching products:', error);
     } 
     };
 
     fetchProducts();
-  },[]);
 
+  },[cartCount]);
 
   return (
     <>
@@ -58,7 +63,8 @@ function App() {
       <Routes>
         <Route path='/' element={<>
         <div>
-        <Navbar setResults={setResults}/>
+        {/* <Navbar setResults={setResults} cartCountHome={cartCount.length} /> */}
+        <Navbar setResults={setResults} />
         <HomeProducts results={results}/>
         </div>
         </>} />

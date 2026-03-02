@@ -13,7 +13,7 @@ const [product, setProduct] = useState([])
 
     try {
       // console.log(item);
-    //   const res = await axios.post('https://stark-store-ecom.vercel.app/api/food/cart', 
+    
       const res = await axios.post('https://stark-store-ecom.vercel.app/api/food/delete/product', 
       // const res = await axios.post('http://localhost:5000/api/food/delete/product', 
       {

@@ -2,11 +2,10 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-// import { set } from "mongoose";
+import { FiUpload, FiPackage, FiDollarSign, FiPercent, FiTag, FiImage } from "react-icons/fi";
+import AdminNavbar from "../components/admin_components/AdminNavbar";
 
 const AddProduct = () => {
-  
-
   const navigate = useNavigate();
   const [product, setProduct] = useState({
     name: "",
@@ -17,11 +16,10 @@ const AddProduct = () => {
   });
 
   const [image, setImage] = useState(null);
-  const [imagePreview, setImagePreview] = useState(null); // For preview
+  const [imagePreview, setImagePreview] = useState(null);
+  const [createMsg, setCreateMsg] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const [createMsg, setCreateMsg] = useState("")
-
-  // Handle normal input fields
   const handleChange = (e) => {
     setProduct({
       ...product,
@@ -29,18 +27,17 @@ const AddProduct = () => {
     });
   };
 
-  // Handle image upload with preview
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
       setImage(file);
-      setImagePreview(URL.createObjectURL(file)); // Create preview URL
+      setImagePreview(URL.createObjectURL(file));
     }
   };
 
-  // Form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     const formData = new FormData();
     formData.append("image", image);
@@ -52,227 +49,271 @@ const AddProduct = () => {
 
     try {
       const res = await axios.post(
-        "https://stark-store-ecom.vercel.app/api/food/upload",
         // "http://localhost:5000/api/food/upload",
+        "https://stark-store-ecom.vercel.app/api/food/upload",
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },
         }
       );
 
-      // console.log(res);
-      setCreateMsg(<div className="fixed top-8 left-1/2 transform -translate-x-1/2 z-50 animate-slide-down">
-      <div className="bg-linear-to-r from-green-600 to-emerald-600 text-white px-8 py-5 rounded-2xl shadow-2xl flex items-center gap-4 min-w-80">
-        <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
-        </svg>
-        <div>
-          <h3 className="text-xl font-bold">Success!</h3>
-          <p className="text-sm opacity-90">Item created</p>
+      setCreateMsg(
+        <div className="fixed top-8 left-1/2 transform -translate-x-1/2 z-50 animate-slide-down">
+          <div className="bg-linear-to-r from-orange-500 to-orange-600 text-white px-8 py-5 rounded-2xl shadow-2xl flex items-center gap-4 min-w-80 backdrop-blur-lg border border-white/30">
+            <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+            </svg>
+            <div>
+              <h3 className="text-xl font-bold">Success!</h3>
+              <p className="text-sm opacity-90">Product added successfully</p>
+            </div>
+          </div>
         </div>
-        <button className="ml-auto text-white hover:text-gray-200">
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
-      </div>
-    </div>);
+      );
 
-        setTimeout(() => {
-          setCreateMsg("");
-        }, 3000);
+      setTimeout(() => {
+        setCreateMsg("");
+      }, 3000);
 
-      // Optional: reset form
       setProduct({ name: "", description: "", price: "", discount: "", category: "" });
       setImage(null);
       setImagePreview(null);
+      setLoading(false);
     } catch (error) {
-
-      if(error){
-      navigate("/admin/login");
-    }
-
-      // console.log(error);
-      alert("Error uploading product");
-    
-      
-//    console.log(error)
-    
+      if (error) {
+        navigate("/admin/login");
+      }
+      setLoading(false);
     }
   };
 
   return (
-
-<>
- 
-
-   <div className="min-h-screen bg-linear-to-br  from-gray-900 via-purple-900 to-black flex justify-center items-center p-1 lg:p-6 ">
-
-
-
-{createMsg}
-
-
-      <div className="w-full max-w-6xl bg-white/95 backdrop-blur-lg  lg:rounded-3xl shadow-2xl overflow-hidden">
-
-
-        {/* HeadTitle */}
-        <div className="bg-linear-to-r from-indigo-600 to-purple-700 px-8 py-4 text-center">
-          <h1 className="text-4xl font-extrabold text-white tracking-wide">
-            STARK<span className="text-orange-500">Store</span>
-          </h1>
-          <p className="text-purple-200 mt-2 text-lg font-medium">
-            Add New Product
-          </p>
+    <>
+    <AdminNavbar />
+      <div className="min-h-screen bg-linear-to-br from-gray-900 via-gray-800 to-gray-900 flex justify-center items-center p-4 lg:p-8 relative overflow-hidden mt-8">
+        
+        {/* Animated background elements */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute -top-40 -right-40 w-80 h-80 bg-orange-500/10 rounded-full blur-3xl animate-pulse" />
+          <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-orange-600/10 rounded-full blur-3xl animate-pulse delay-1000" />
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-white/5 rounded-full blur-3xl" />
         </div>
 
-        <div className="p-10">
-          <form onSubmit={handleSubmit} className="space-y-8">
-            {/* Product Image Upload with Preview */}
-            <div className="space-y-4">
-              <label className="block text-md font-semibold text-gray-800">
-                Product Image
-              </label>
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleImageChange}
-                className="w-full text-gray-700 file:mr-4 file:py-3 file:px-6 
-                file:rounded-xl file:border-0 file:text-md file:font-bold 
-                file:bg-linear-to-r file:from-indigo-600 file:to-purple-600 
-                file:text-white hover:file:from-indigo-700 hover:file:to-purple-700 
-                cursor-pointer transition duration-300"
-              />
+        {createMsg}
 
-              {/* Image Preview */}
-              {imagePreview && (
-                <div className="mt-6 flex justify-center">
-                  <div className="relative group">
-                    <img
-                      src={imagePreview}
-                      alt="Product preview"
-                      className="max-h-96 rounded-2xl shadow-lg border-4 border-indigo-200 
-                      object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-black/30 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                      <p className="text-white font-bold text-lg">Selected Image</p>
+        <div className="w-full max-w-4xl bg-white/10 backdrop-blur-xl rounded-3xl shadow-[0_8px_32px_rgba(0,0,0,0.3)] border border-white/20 overflow-hidden relative z-10">
+          
+          {/* Header with linear */}
+          <div className="bg-linear-to-r from-orange-500 to-orange-600 px-8 py-6 text-center relative">
+            <div className="absolute inset-0 bg-white/10 backdrop-blur-sm" />
+            <div className="relative z-10">
+              <h1 className="text-4xl font-extrabold text-white tracking-wide mb-2">
+                STARK<span className="text-gray-900 font-medium">Store</span>
+              </h1>
+              <p className="text-orange-100 text-lg font-medium flex items-center justify-center gap-2">
+                <FiPackage />
+                Add New Product to Inventory
+              </p>
+            </div>
+          </div>
+
+          <div className="p-8 lg:p-10">
+            <form onSubmit={handleSubmit} className="space-y-8">
+              
+              {/* Image Upload Section with Preview */}
+              <div className="space-y-4">
+                <label className=" text-md font-semibold text-white/90 flex items-center gap-2">
+                  <FiImage className="text-orange-400" />
+                  Product Image
+                </label>
+                
+                <div className="relative group">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageChange}
+                    className="w-full text-white/80 file:mr-4 file:py-3 file:px-6 
+                    file:rounded-xl file:border-0 file:text-md file:font-bold 
+                    file:bg-linear-to-r file:from-orange-500 file:to-orange-600 
+                    file:text-white hover:file:from-orange-600 hover:file:to-orange-700 
+                    cursor-pointer transition duration-300 bg-white/5 backdrop-blur-sm
+                    border border-white/10 rounded-xl p-2"
+                  />
+                </div>
+
+                {/* Image Preview with Glass Effect */}
+                {imagePreview && (
+                  <div className="mt-6 flex justify-center">
+                    <div className="relative group">
+                      <div className="absolute inset-0 bg-linear-to-r from-orange-500/20 to-orange-600/20 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-500" />
+                      <img
+                        src={imagePreview}
+                        alt="Product preview"
+                        className="relative max-h-96 rounded-2xl shadow-2xl border-4 border-white/20 
+                        object-cover transition-all duration-500 group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-linear-to-t from-black/50 via-transparent to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-4">
+                        <p className="text-white font-bold text-lg backdrop-blur-sm bg-black/30 px-4 py-2 rounded-full">
+                          ✓ Ready to upload
+                        </p>
+                      </div>
                     </div>
                   </div>
-                </div>
-              )}
-            </div>
+                )}
+              </div>
 
-            {/* Product Name */}
-            <div>
-              <label className="block text-md font-semibold text-gray-800 mb-2">
-                Product Name
-              </label>
-              <input
-                type="text"
-                name="name"
-                value={product.name}
-                onChange={handleChange}
-                required
-                placeholder="Enter product name"
-                className="w-full px-5 py-4 text-lg border-2 border-gray-300 rounded-xl 
-                focus:ring-4 focus:ring-purple-300 focus:border-purple-600 outline-none transition"
-              />
-            </div>
-
-            {/* Description */}
-            <div>
-              <label className="block text-md font-semibold text-gray-800 mb-2">
-                Description
-              </label>
-              <textarea
-                name="description"
-                value={product.description}
-                onChange={handleChange}
-                rows="5"
-                required
-                placeholder="Describe your product..."
-                className="w-full px-5 py-4 text-lg border-2 border-gray-300 rounded-xl 
-                focus:ring-4 focus:ring-purple-300 focus:border-purple-600 outline-none resize-none transition"
-              />
-            </div>
-
-            {/* Price and Discount */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div>
-                <label className="block text-md font-semibold text-gray-800 mb-2">
-                  Price (₹)
+              {/* Product Name with Icon */}
+              <div className="relative group">
+                <label className="text-md font-semibold text-white/90 mb-2 flex items-center gap-2">
+                  <FiPackage className="text-orange-400" />
+                  Product Name
                 </label>
+                <div className="absolute inset-0 bg-linear-to-r from-orange-500/20 to-orange-600/20 rounded-xl opacity-0 group-focus-within:opacity-100 transition-opacity duration-300" />
                 <input
-                  type="number"
-                  name="price"
-                  value={product.price}
+                  type="text"
+                  name="name"
+                  value={product.name}
                   onChange={handleChange}
                   required
-                  placeholder="0.00"
-                  min="0"
-                  // step="0.01"
-                  className="w-full px-5 py-4 text-lg border-2 border-gray-300 rounded-xl 
-                  focus:ring-4 focus:ring-purple-300 focus:border-purple-600 outline-none transition"
+                  placeholder="Enter product name"
+                  className="w-full px-5 py-4 text-lg bg-white/5 backdrop-blur-sm 
+                  border border-white/10 rounded-xl text-white placeholder-gray-400
+                  focus:outline-none focus:border-orange-500/50 focus:bg-white/10
+                  transition-all duration-300"
                 />
               </div>
 
-              <div>
-                <label className="block text-md font-semibold text-gray-800 mb-2">
-                  Discount (%)
+              {/* Description */}
+              <div className="relative group">
+                <label className="block text-md font-semibold text-white/90 mb-2">
+                  Description
                 </label>
-                <input
-                  type="number"
-                  name="discount"
-                  value={product.discount}
+                <textarea
+                  name="description"
+                  value={product.description}
                   onChange={handleChange}
-                  placeholder="0"
-                  min="0"
-                  max="100"
-                  className="w-full px-5 py-4 text-lg border-2 border-gray-300 rounded-xl 
-                  focus:ring-4 focus:ring-purple-300 focus:border-purple-600 outline-none transition"
+                  rows="5"
+                  required
+                  placeholder="Describe your product..."
+                  className="w-full px-5 py-4 text-lg bg-white/5 backdrop-blur-sm 
+                  border border-white/10 rounded-xl text-white placeholder-gray-400
+                  focus:outline-none focus:border-orange-500/50 focus:bg-white/10
+                  transition-all duration-300 resize-none"
                 />
               </div>
-            </div>
 
-            {/* Category */}
-            {/* <div>
-              <label className="block text-md font-semibold text-gray-800 mb-2">
-                Category
-              </label>
-              <select
-                name="category"
-                value={product.category}
-                onChange={handleChange}
-                required
-                className="w-full px-5 py-4 text-lg border-2 border-gray-300 rounded-xl 
-                focus:ring-4 focus:ring-purple-300 focus:border-purple-600 outline-none transition"
+              {/* Price and Discount Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Price */}
+                <div className="relative group">
+                  <label className="text-md font-semibold text-white/90 mb-2 flex items-center gap-2">
+                    <FiDollarSign className="text-orange-400" />
+                    Price (₹)
+                  </label>
+                  <input
+                    type="number"
+                    name="price"
+                    value={product.price}
+                    onChange={handleChange}
+                    required
+                    placeholder="0.00"
+                    min="0"
+                    className="w-full px-5 py-4 text-lg bg-white/5 backdrop-blur-sm 
+                    border border-white/10 rounded-xl text-white placeholder-gray-400
+                    focus:outline-none focus:border-orange-500/50 focus:bg-white/10
+                    transition-all duration-300
+                    appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none [-moz-appearance:textfield]
+                    "
+                  />
+                </div>
+
+                {/* Discount */}
+                <div className="relative group">
+                  <label className="text-md font-semibold text-white/90 mb-2 flex items-center gap-2">
+                    <FiPercent className="text-orange-400" />
+                    Discount (%)
+                  </label>
+                  <input
+                    type="number"
+                    name="discount"
+                    value={product.discount}
+                    onChange={handleChange}
+                    placeholder="0"
+                    min="0"
+                    max="100"
+                    className="w-full px-5 py-4 text-lg bg-white/5 backdrop-blur-sm 
+                    border border-white/10 rounded-xl text-white placeholder-gray-400
+                    focus:outline-none focus:border-orange-500/50 focus:bg-white/10
+                    transition-all duration-300
+                    appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none [-moz-appearance:textfield]
+                    "
+                  />
+                </div>
+              </div>
+
+              {/* Category */}
+              <div className="relative group">
+                <label className="text-md font-semibold text-white/90 mb-2 flex items-center gap-2">
+                  <FiTag className="text-orange-400" />
+                  Category
+                </label>
+                <select
+                  name="category"
+                  value={product.category}
+                  onChange={handleChange}
+                  required
+                  className="w-full px-5 py-4 text-lg bg-white/5 backdrop-blur-sm 
+                  border border-white/10 rounded-xl text-white
+                  focus:outline-none focus:border-orange-500/50 focus:bg-white/10
+                  transition-all duration-300"
+                >
+                  <option value="" disabled className="bg-gray-800">Select category</option>
+                  <option value="Electronics" className="bg-gray-800">Electronics</option>
+                  <option value="Fashion" className="bg-gray-800">Fashion</option>
+                  <option value="Footwear" className="bg-gray-800">Footwear</option>
+                  <option value="Watches" className="bg-gray-800">Watches</option>
+                  <option value="Accessories" className="bg-gray-800">Accessories</option>
+                  <option value="Sports" className="bg-gray-800">Sports</option>
+                </select>
+              </div>
+
+              {/* Submit Button */}
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full bg-linear-to-r from-orange-500 to-orange-600 text-white 
+                py-5 rounded-xl font-bold text-xl hover:from-orange-600 hover:to-orange-700 
+                transform hover:scale-[1.02] active:scale-95 transition-all duration-300 
+                shadow-[0_8px_30px_rgba(249,115,22,0.3)] border border-white/20
+                disabled:opacity-50 disabled:cursor-not-allowed
+                flex items-center justify-center gap-3 group"
               >
-                <option value="" disabled>Select category</option>
-                <option>Electronics</option>
-                <option>Fashion</option>
-                <option>Home & Kitchen</option>
-                <option>Sports</option>
-                <option>Books</option>
-                <option>Other</option>
-              </select>
-            </div> */}
+                {loading ? (
+                  <>
+                    <div className="w-6 h-6 border-3 border-white/30 border-t-white rounded-full animate-spin" />
+                    Adding Product...
+                  </>
+                ) : (
+                  <>
+                    <FiUpload className="text-xl group-hover:rotate-12 transition-transform duration-300" />
+                    Add Product to Store
+                  </>
+                )}
+              </button>
 
-            {/* Submit Button */}
-            <button
-              type="submit"
-              className="w-full bg-linear-to-r from-indigo-600 to-purple-700 text-white 
-              py-5 rounded-xl font-bold text-xl hover:from-indigo-700 hover:to-purple-800 
-              transform hover:scale-105 transition duration-300 shadow-xl"
-            >
-              Add Product
-            </button>
-          </form>
+              {/* Form Footer Note */}
+              <p className="text-center text-sm text-gray-400 mt-6">
+                All fields are required • Product will be visible immediately after addition
+              </p>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
 
- </>
- );
+     
+      
+    </>
+  );
 };
 
 export default AddProduct;

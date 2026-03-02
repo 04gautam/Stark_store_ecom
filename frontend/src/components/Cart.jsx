@@ -9,7 +9,7 @@ function Cart() {
 
   const [cart, setCart] = useState([])
 
-// console.log(cart)
+// console.log(cart.length)
 try {
   const navigate = useNavigate();
   useEffect(() => {
@@ -50,7 +50,7 @@ try {
 
   
   return ( <>
-  <Navbar ></Navbar>
+  <Navbar cartCount={cart.length}/>
   <div className="mt-24">
     {cart.length !=0 ? 
 <h2 className="text-3xl font-bold text-center text-black">Your Cart</h2>
@@ -92,13 +92,7 @@ try {
   )}
 
   </div>
-         
-
-
-     
-   
-
-  
+ 
   </> );
 }
 

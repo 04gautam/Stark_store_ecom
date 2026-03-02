@@ -47,8 +47,8 @@ export default function PayButton({ amount, formData , productId, ispaid}) {
       handler: async function (response) {
     try {
       const verifyRes = await axios.post(
-        // "https://stark-store-ecom.vercel.app/api/food/verify",
-        "http://localhost:5000/api/food/verify",
+        "https://stark-store-ecom.vercel.app/api/food/verify",
+        // "http://localhost:5000/api/food/verify",
         {
           razorpay_payment_id: response.razorpay_payment_id,
           razorpay_order_id: response.razorpay_order_id,
@@ -64,8 +64,8 @@ export default function PayButton({ amount, formData , productId, ispaid}) {
 //*** this all is just for test now we can call this apin to save the orders on backend
 //    with needed data like product id and form data  */
 
-        //  const res = await axios.post("https://stark-store-ecom.vercel.app/api/food/ship/" + productId, {
-         const res = await axios.post("http://localhost:5000/api/food/ship/" + productId, {
+         const res = await axios.post("https://stark-store-ecom.vercel.app/api/food/ship/" + productId, {
+        //  const res = await axios.post("http://localhost:5000/api/food/ship/" + productId, {
       productId: productId,
       ispaid: ispaid,
       ...formData,  

@@ -167,5 +167,10 @@ router.get('/delete/cart',
     // authMiddleware.authUserMiddleware,
     foodController.deleteCartItem
 )
+
+router.post('/starkai',
+    // authMiddleware.authUserMiddleware,
+    foodController.aiChatbot
+)
 // module.exports = router
 export default router;

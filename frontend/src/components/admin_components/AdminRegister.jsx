@@ -32,7 +32,7 @@ const AdminRegister = () => {
         // "http://localhost:5000/api/auth/admin/register",
         {
           ...formData,
-          role: "admin", // 👑 admin role
+          role: "admin", // Explicitly set role to admin
         },
         {
           headers: { "Content-Type": "application/json" },
